@@ -17,6 +17,14 @@ const userSchema = mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  coordinate: {
+    type: String,
+    required: true
+  },
+  availability: {
+    type: Number,
+    defult: 0
   }
 });
 
