@@ -138,7 +138,8 @@ const distCalc = (x1, y1, x2, y2) => {
 
 //patient get route
 router.get("/user/hospital", (req, res) => {
-  const { lattitude, longitude, range } = req.body;
+  const { lattitude, longitude, range } = req.query;
+  console.log(req.query);
   User.find({})
     .then((hospitals) => {
       if (hospitals.length == 0) {
