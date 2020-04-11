@@ -138,16 +138,14 @@ const distCalc = (x1, y1, x2, y2) => {
 
 //patient get route
 router.get("/user/hospital", (req, res) => {
-  const { lattitude, longitude } = req.body;
-  const hosp_array = [];
+  const { lattitude, longitude, range } = req.body;
   User.find({})
     .then((hospitals) => {
       if (hospitals.length == 0) {
         res.status(404).json({ notFound: "No nearby hospital found" });
-        console.log("sadknskdcnas");
       } else {
         const arr = hospitals.map((hospital) => {
-          var hosp_dist = {};
+          let hosp_dist = {};
 
           const dist = distCalc(
             lattitude,
@@ -162,7 +160,7 @@ router.get("/user/hospital", (req, res) => {
           hosp_dist.lattitude = hospital.lattitude;
           hosp_dist.longitude = hospital.longitude;
 
-          return hosp_dist;
+          return dist <= range ? hosp_dist : {};
         });
         res.json(arr);
       }
