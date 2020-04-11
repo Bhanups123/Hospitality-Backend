@@ -18,6 +18,10 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  contact: {
+    type: Number,
+    required: true,
+  },
   lattitude: {
     type: Number,
     required: true,
