@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema({
   },
   availability: {
     type: Number,
-    defult: 0,
+    required: true,
   },
 });
 

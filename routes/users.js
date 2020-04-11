@@ -106,8 +106,8 @@ router.get(
     res.json({
       name: req.user.name,
       email: req.user.email,
-      lattitude: user.lattitude,
-      longitude: user.longitude,
+      lattitude: req.user.lattitude,
+      longitude: req.user.longitude,
       availability: req.user.availability,
     });
   }
@@ -120,15 +120,20 @@ router.post(
   "/hospital",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findById({ id: req.user.id }).then((user) => {
-      user.availability = req.availability;
+    User.findOne({ email: req.user.email }).then((user) => {
+      user.availability = req.body.availability;
       user
         .save()
-        .then((user_s) => res.json(user_s))
+        .then((user_s) => res.json({ success: "true" }))
         .err((err) => res.json(err));
     });
   }
 );
 
 //patient get route
-// router.get();
+router.get("/user/hospital", (req, res) => {
+  const { lattitude, longitude } = req.body;
+  User.find({}).then((hospitals) => {
+    res.json(hospitals);
+  });
+});
