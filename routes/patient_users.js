@@ -9,6 +9,10 @@ const router = express.Router();
 
 const distCalc = require("../utils/distCalc");
 
+//load input validation
+const validateRegisterInput = require("../validation/patient user/register");
+const validateLoginInput = require("../validation/login");
+
 //nearby hospitals route
 router.get("/hospitals", (req, res) => {
   const { latitude, longitude, range } = req.query;
@@ -47,10 +51,6 @@ router.get("/hospitals", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-//load input validation
-const validateRegisterInput = require("../validation/hospital user/register");
-const validateLoginInput = require("../validation/login");
-
 //register route
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -73,7 +73,7 @@ router.post("/register", (req, res) => {
         contact: req.body.contact,
       });
       bcrypt.genSalt(10, (err, salt) => {
-        bcrypthash(newUser.password, salt, (err, hash) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
           newUser.password = hash;
           newUser
