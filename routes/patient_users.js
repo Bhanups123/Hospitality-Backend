@@ -5,12 +5,35 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
 const passport = require("passport");
-
 const router = express.Router();
 
+//degree to radians
+const toRadians = (degree) => {
+  const one_deg = 22 / (7 * 180);
+  return one_deg * degree;
+};
+
 //distance calculator fn
-const distCalc = (x1, y1, x2, y2) => {
-  return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+const distCalc = (lat1, long1, lat2, long2) => {
+  lat1 = toRadians(lat1);
+  long1 = toRadians(long1);
+  lat2 = toRadians(lat2);
+  long2 = toRadians(long2);
+
+  const dlong = long2 - long1;
+  const dlat = lat2 - lat1;
+
+  let ans =
+    Math.pow(Math.sin(dlat / 2), 2) +
+    Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlong / 2), 2);
+
+  ans = 2 * Math.asin(Math.sqrt(ans));
+
+  const R = 6371;
+
+  ans = ans * R;
+
+  return ans;
 };
 
 //nearby hospitals route

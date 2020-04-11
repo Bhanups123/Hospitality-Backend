@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require("../models/HospitalUser");
+const HospitalUser = require("../models/HospitalUser");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
@@ -19,12 +19,12 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then((user) => {
-    if (user) {
+  HospitalUser.findOne({ email: req.body.email }).then((hospital) => {
+    if (hospital) {
       errors.email = "email already exist";
       return res.status(400).json(errors);
     } else {
-      const newUser = new User({
+      const newUser = new HospitalUser({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
@@ -39,7 +39,7 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then((user) => res.json(user))
+            .then((hospital) => res.json(hospital))
             .catch((err) => console.log(err));
         });
       });
@@ -55,25 +55,26 @@ router.post("/login", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then((user) => {
-    //checking for user
-    if (!user) {
-      errors.email = "user not found";
+  HospitalUser.findOne({ email: req.body.email }).then((hospital) => {
+    //checking for hospital
+    if (!hospital) {
+      errors.email = "hospital not found";
       return res.status(404).json(errors);
     }
 
     //check password
-    bcrypt.compare(req.body.password, user.password).then((isMatch) => {
+    bcrypt.compare(req.body.password, hospital.password).then((isMatch) => {
       if (isMatch) {
-        //user matched
+        //hospital matched
         const payload = {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          latitude: user.latitude,
-          longitude: user.longitude,
-          availability: user.availability,
-          contact: user.contact,
+          id: hospital.id,
+          name: hospital.name,
+          email: hospital.email,
+          latitude: hospital.latitude,
+          longitude: hospital.longitude,
+          availability: hospital.availability,
+          contact: hospital.contact,
+          userType: "hospital",
         }; //create jwt payload
 
         //jwt sign
@@ -118,9 +119,9 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findOne({ email: req.user.email }).then((user) => {
-      user.availability = req.body.availability;
-      user
+    HospitalUser.findOne({ email: req.user.email }).then((hospital) => {
+      hospital.availability = req.body.availability;
+      hospital
         .save()
         .then((user_s) => res.json({ success: "true" }))
         .catch((err) => res.json(err));
