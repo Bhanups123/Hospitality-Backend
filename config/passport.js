@@ -2,6 +2,7 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const mongoose = require("mongoose");
 const HospitalUser = mongoose.model("HospitalUser");
+const PatientUser = mongoose.model("PatientUser");
 const keys = require("./keys");
 
 const opts = {};
@@ -15,6 +16,18 @@ module.exports = (passport) => {
         .then((hospital) => {
           if (hospital) {
             return done(null, hospital);
+          }
+          return done(null, false);
+        })
+        .catch((err) => console.log(err));
+    })
+  );
+  passport.use(
+    new JwtStrategy(opts, (jwt_payload, done) => {
+      PatientUser.findById(jwt_payload.id)
+        .then((patient) => {
+          if (patient) {
+            return done(null, patient);
           }
           return done(null, false);
         })
