@@ -21,7 +21,7 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
       errors.email = "email already exist";
       return res.status(400).json(errors);
@@ -30,8 +30,9 @@ router.post("/register", (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        coordinate: req.body.coordinate,
-        availability: req.body.availability
+        lattitude: req.body.lattitude,
+        longitude: req.body.longitude,
+        availability: req.body.availability,
       });
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -39,8 +40,8 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
+            .then((user) => res.json(user))
+            .catch((err) => console.log(err));
         });
       });
     }
@@ -55,7 +56,7 @@ router.post("/login", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email: req.body.email }).then((user) => {
     //checking for user
     if (!user) {
       errors.email = "user not found";
@@ -63,15 +64,16 @@ router.post("/login", (req, res) => {
     }
 
     //check password
-    bcrypt.compare(req.body.password, user.password).then(isMatch => {
+    bcrypt.compare(req.body.password, user.password).then((isMatch) => {
       if (isMatch) {
         //user matched
         const payload = {
           id: user.id,
           name: user.name,
           email: user.email,
-          coordinate: user.coordinate,
-          availability: user.availability
+          lattitude: user.lattitude,
+          longitude: user.longitude,
+          availability: user.availability,
         }; //create jwt payload
 
         //jwt sign
@@ -82,7 +84,7 @@ router.post("/login", (req, res) => {
           (err, token) => {
             res.json({
               success: true,
-              token: "Bearer " + token
+              token: "Bearer " + token,
             });
           }
         );
@@ -104,8 +106,9 @@ router.get(
     res.json({
       name: req.user.name,
       email: req.user.email,
-      coordinate: req.user.coordinate,
-      availability: req.user.availability
+      lattitude: user.lattitude,
+      longitude: user.longitude,
+      availability: req.user.availability,
     });
   }
 );
@@ -113,3 +116,19 @@ router.get(
 module.exports = router;
 
 //update route
+router.post(
+  "/hospital",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    User.findById({ id: req.user.id }).then((user) => {
+      user.availability = req.availability;
+      user
+        .save()
+        .then((user_s) => res.json(user_s))
+        .err((err) => res.json(err));
+    });
+  }
+);
+
+//patient get route
+// router.get();
