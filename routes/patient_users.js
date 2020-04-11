@@ -47,7 +47,96 @@ router.get("/hospitals", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-//hospital appoint
+//load input validation
+const validateRegisterInput = require("../validation/hospital user/register");
+const validateLoginInput = require("../validation/login");
+
+//register route
+router.post("/register", (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  PatientUser.findOne({ email: req.body.email }).then((patient) => {
+    if (patient) {
+      errors.email = "email already exist";
+      return res.status(400).json(errors);
+    } else {
+      const newUser = new PatientUser({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        contact: req.body.contact,
+      });
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypthash(newUser.password, salt, (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          newUser
+            .save()
+            .then((patient) => res.json(patient))
+            .catch((err) => console.log(err));
+        });
+      });
+    }
+  });
+});
+
+//login route
+router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  PatientUser.findOne({ email: req.body.email }).then((patient) => {
+    //checking for hospital
+    if (!patient) {
+      errors.email = "user not found";
+      return res.status(404).json(errors);
+    }
+
+    //check password
+    bcrypt.compare(req.body.password, patient.password).then((isMatch) => {
+      if (isMatch) {
+        //patient matched
+        const payload = {
+          id: patient.id,
+          name: patient.name,
+          email: patient.email,
+          latitude: patient.latitude,
+          longitude: patient.longitude,
+          availability: patient.availability,
+          contact: patient.contact,
+          userType: "patient",
+        }; //create jwt payload
+
+        //jwt sign
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token,
+            });
+          }
+        );
+      } else {
+        errors.password = "Incorrect Password!!";
+        return res.status(400).json(errors);
+      }
+    });
+  });
+});
+
+//patient appoint
 //private route
-// router.get("/hospitals/:hospital");
+// router.get("/patients/:patient");
 module.exports = router;
