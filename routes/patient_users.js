@@ -1,5 +1,6 @@
 const express = require("express");
 const HospitalUser = require("../models/HospitalUser");
+const PatientUser = require("../models/PatientUser");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
@@ -7,12 +8,12 @@ const passport = require("passport");
 
 const router = express.Router();
 
-//distance calculator
+//distance calculator fn
 const distCalc = (x1, y1, x2, y2) => {
   return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 };
 
-//patient get route
+//nearby hospitals route
 router.get("/hospitals", (req, res) => {
   const { latitude, longitude, range } = req.query;
   HospitalUser.find({})
@@ -50,4 +51,7 @@ router.get("/hospitals", (req, res) => {
     .catch((err) => res.json(err));
 });
 
+//hospital appoint
+//private route
+// router.get("/hospitals/:hospital");
 module.exports = router;

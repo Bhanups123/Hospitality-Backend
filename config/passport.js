@@ -12,6 +12,7 @@ opts.secretOrKey = keys.secretOrKey;
 module.exports = (passport) => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
+      // console.log(jwt_payload);
       HospitalUser.findById(jwt_payload.id)
         .then((hospital) => {
           if (hospital) {
@@ -22,16 +23,12 @@ module.exports = (passport) => {
         .catch((err) => console.log(err));
     })
   );
-  passport.use(
-    new JwtStrategy(opts, (jwt_payload, done) => {
-      PatientUser.findById(jwt_payload.id)
-        .then((patient) => {
-          if (patient) {
-            return done(null, patient);
-          }
-          return done(null, false);
-        })
-        .catch((err) => console.log(err));
-    })
-  );
+  // PatientUser.findById(jwt_payload.id)
+  //   .then((patient) => {
+  //     if (patient) {
+  //       return done(null, patient);
+  //     }
+  //     return done(null, false);
+  //   })
+  //   .catch((err) => console.log(err));
 };
