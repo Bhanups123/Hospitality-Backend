@@ -10,7 +10,4 @@ const appointmentSchema = mongoose.Schema({
   ],
 });
 
-module.exports = HospitalUser = mongoose.model(
-  "HospitalUser",
-  hospitalUserSchema
-);
+module.exports = Appointment = mongoose.model("Appointment", appointmentSchema);
