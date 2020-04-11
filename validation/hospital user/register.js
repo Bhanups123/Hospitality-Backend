@@ -1,5 +1,5 @@
 const validator = require("validator");
-const isEmpty = require("./is-empty");
+const isEmpty = require("../is-empty");
 
 module.exports = function validateRegisterInput(data) {
   let errors = {};
@@ -10,7 +10,7 @@ module.exports = function validateRegisterInput(data) {
   data.password2 = isEmpty(data.password2) ? "" : data.password2;
   data.contact = isEmpty(data.contact) ? "" : data.contact;
   data.availability = isEmpty(data.availability) ? "" : data.availability;
-  data.lattitude = isEmpty(data.lattitude) ? "" : data.lattitude;
+  data.latitude = isEmpty(data.latitude) ? "" : data.latitude;
   data.longitude = isEmpty(data.longitude) ? "" : data.longitude;
 
   //name
@@ -57,9 +57,9 @@ module.exports = function validateRegisterInput(data) {
   if (validator.isEmpty(data.contact)) {
     errors.contact = "Contact is required";
   }
-  //lattitude
-  if (validator.isEmpty(data.lattitude)) {
-    errors.lattitude = "Lattitude is required";
+  //latitude
+  if (validator.isEmpty(data.latitude)) {
+    errors.latitude = "latitude is required";
   }
 
   //longitude

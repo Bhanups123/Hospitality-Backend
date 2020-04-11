@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({
+const hospitalUserSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  lattitude: {
+  latitude: {
     type: Number,
     required: true,
   },
@@ -36,4 +36,7 @@ const userSchema = mongoose.Schema({
   },
 });
 
-module.exports = User = mongoose.model("User", userSchema);
+module.exports = HospitalUser = mongoose.model(
+  "HospitalUser",
+  hospitalUserSchema
+);
