@@ -116,8 +116,6 @@ router.get(
   }
 );
 
-module.exports = router;
-
 //update route
 router.post(
   "/hospital",
@@ -133,6 +131,7 @@ router.post(
   }
 );
 
+//distance calculator
 const distCalc = (x1, y1, x2, y2) => {
   return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 };
@@ -143,31 +142,32 @@ router.get("/user/hospital", (req, res) => {
   const hosp_array = [];
   User.find({})
     .then((hospitals) => {
-      // if (hospitals.length == 0) {
-      //   res.status(404).json({ notFound: "No nearby hospital found" });
-      //   console.log("sadknskdcnas");
-      // } else {
-      console.log(hospitals);
-      const arr = hospitals.map((hospital) => {
-        var hosp_dist = {};
+      if (hospitals.length == 0) {
+        res.status(404).json({ notFound: "No nearby hospital found" });
+        console.log("sadknskdcnas");
+      } else {
+        const arr = hospitals.map((hospital) => {
+          var hosp_dist = {};
 
-        const dist = distCalc(
-          lattitude,
-          longitude,
-          hospital.lattitude,
-          hospital.longitude
-        );
+          const dist = distCalc(
+            lattitude,
+            longitude,
+            hospital.lattitude,
+            hospital.longitude
+          );
 
-        hosp_dist.name = hospital.name;
-        hosp_dist.contact = hospital.contact;
-        hosp_dist.distance = dist;
-        hosp_dist.lattitude = hospital.lattitude;
-        hosp_dist.longitude = hospital.longitude;
+          hosp_dist.name = hospital.name;
+          hosp_dist.contact = hospital.contact;
+          hosp_dist.distance = dist;
+          hosp_dist.lattitude = hospital.lattitude;
+          hosp_dist.longitude = hospital.longitude;
 
-        return hosp_dist;
-      });
-
-      res.json(arr);
+          return hosp_dist;
+        });
+        res.json(arr);
+      }
     })
     .catch((err) => res.json(err));
 });
+
+module.exports = router;

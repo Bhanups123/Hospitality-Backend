@@ -8,6 +8,10 @@ module.exports = function validateRegisterInput(data) {
   data.email = isEmpty(data.email) ? "" : data.email;
   data.password = isEmpty(data.password) ? "" : data.password;
   data.password2 = isEmpty(data.password2) ? "" : data.password2;
+  data.contact = isEmpty(data.contact) ? "" : data.contact;
+  data.availability = isEmpty(data.availability) ? "" : data.availability;
+  data.lattitude = isEmpty(data.lattitude) ? "" : data.lattitude;
+  data.longitude = isEmpty(data.longitude) ? "" : data.longitude;
 
   //name
   if (!validator.isLength(data.name, { min: 2, max: 30 })) {
@@ -45,7 +49,7 @@ module.exports = function validateRegisterInput(data) {
     errors.password2 = "Confirm Password is required";
   }
 
-  //contact
+  // contact
   if (!validator.isLength(data.contact, { min: 10, max: 10 })) {
     errors.contact = "Contact must be 10 digits";
   }
