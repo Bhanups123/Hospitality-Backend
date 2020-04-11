@@ -3,29 +3,33 @@ const mongoose = require("mongoose");
 const userSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  coordinate: {
-    type: String,
-    required: true
+  lattitude: {
+    type: Number,
+    required: true,
+  },
+  longitude: {
+    type: Number,
+    required: true,
   },
   availability: {
     type: Number,
-    defult: 0
-  }
+    defult: 0,
+  },
 });
 
 module.exports = User = mongoose.model("User", userSchema);
