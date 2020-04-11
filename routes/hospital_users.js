@@ -123,7 +123,7 @@ router.post(
       user
         .save()
         .then((user_s) => res.json({ success: "true" }))
-        .err((err) => res.json(err));
+        .catch((err) => res.json(err));
     });
   }
 );
