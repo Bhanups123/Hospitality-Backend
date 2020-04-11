@@ -29,7 +29,9 @@ router.post("/register", (req, res) => {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        coordinate: req.body.coordinate,
+        availability: req.body.availability
       });
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -64,7 +66,13 @@ router.post("/login", (req, res) => {
     bcrypt.compare(req.body.password, user.password).then(isMatch => {
       if (isMatch) {
         //user matched
-        const payload = { id: user.id, name: user.name, email: user.email }; //create jwt payload
+        const payload = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          coordinate: user.coordinate,
+          availability: user.availability
+        }; //create jwt payload
 
         //jwt sign
         jwt.sign(
@@ -95,9 +103,13 @@ router.get(
   (req, res) => {
     res.json({
       name: req.user.name,
-      email: req.user.email
+      email: req.user.email,
+      coordinate: req.user.coordinate,
+      availability: req.user.availability
     });
   }
 );
 
 module.exports = router;
+
+//update route
