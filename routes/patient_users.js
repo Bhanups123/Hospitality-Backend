@@ -51,6 +51,15 @@ router.get("/hospitals", (req, res) => {
     .catch((err) => res.json(err));
 });
 
+//selected hospital
+router.get("/hospitals/:id", (req, res) => {
+  HospitalUser.findOne({ _id: req.params.id })
+    .then((hospital) => {
+      res.json(hospital);
+    })
+    .catch((err) => res.json(err));
+});
+
 //register route
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -136,7 +145,6 @@ router.post("/login", (req, res) => {
   });
 });
 
-//patient appoint
-//private route
-// router.get("/patients/:patient");
+//patient appointment
+router.get("/hospitals/:id/patient", (req, res) => {});
 module.exports = router;
