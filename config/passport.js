@@ -13,22 +13,25 @@ module.exports = (passport) => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
       // console.log(jwt_payload);
-      HospitalUser.findById(jwt_payload.id)
-        .then((hospital) => {
-          if (hospital) {
-            return done(null, hospital);
-          }
-          return done(null, false);
-        })
-        .catch((err) => console.log(err));
+      if (jwt_payload.userType === "hospital") {
+        HospitalUser.findById(jwt_payload.id)
+          .then((hospital) => {
+            if (hospital) {
+              return done(null, hospital);
+            }
+            return done(null, false);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        PatientUser.findById(jwt_payload.id)
+          .then((patient) => {
+            if (patient) {
+              return done(null, patient);
+            }
+            return done(null, false);
+          })
+          .catch((err) => console.log(err));
+      }
     })
   );
-  // PatientUser.findById(jwt_payload.id)
-  //   .then((patient) => {
-  //     if (patient) {
-  //       return done(null, patient);
-  //     }
-  //     return done(null, false);
-  //   })
-  //   .catch((err) => console.log(err));
 };
