@@ -33,6 +33,7 @@ router.post("/register", (req, res) => {
         lattitude: req.body.lattitude,
         longitude: req.body.longitude,
         availability: req.body.availability,
+        contact: req.body.contact,
       });
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -74,6 +75,7 @@ router.post("/login", (req, res) => {
           lattitude: user.lattitude,
           longitude: user.longitude,
           availability: user.availability,
+          contact: user.contact,
         }; //create jwt payload
 
         //jwt sign
@@ -109,6 +111,7 @@ router.get(
       lattitude: req.user.lattitude,
       longitude: req.user.longitude,
       availability: req.user.availability,
+      contact: req.user.contact,
     });
   }
 );
@@ -130,10 +133,41 @@ router.post(
   }
 );
 
+const distCalc = (x1, y1, x2, y2) => {
+  return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+};
+
 //patient get route
 router.get("/user/hospital", (req, res) => {
   const { lattitude, longitude } = req.body;
-  User.find({}).then((hospitals) => {
-    res.json(hospitals);
-  });
+  const hosp_array = [];
+  User.find({})
+    .then((hospitals) => {
+      // if (hospitals.length == 0) {
+      //   res.status(404).json({ notFound: "No nearby hospital found" });
+      //   console.log("sadknskdcnas");
+      // } else {
+      console.log(hospitals);
+      const arr = hospitals.map((hospital) => {
+        var hosp_dist = {};
+
+        const dist = distCalc(
+          lattitude,
+          longitude,
+          hospital.lattitude,
+          hospital.longitude
+        );
+
+        hosp_dist.name = hospital.name;
+        hosp_dist.contact = hospital.contact;
+        hosp_dist.distance = dist;
+        hosp_dist.lattitude = hospital.lattitude;
+        hosp_dist.longitude = hospital.longitude;
+
+        return hosp_dist;
+      });
+
+      res.json(arr);
+    })
+    .catch((err) => res.json(err));
 });
