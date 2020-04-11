@@ -45,8 +45,31 @@ module.exports = function validateRegisterInput(data) {
     errors.password2 = "Confirm Password is required";
   }
 
+  //contact
+  if (!validator.isLength(data.contact, { min: 10, max: 10 })) {
+    errors.contact = "Contact must be 10 digits";
+  }
+
+  if (validator.isEmpty(data.contact)) {
+    errors.contact = "Contact is required";
+  }
+  //lattitude
+  if (validator.isEmpty(data.lattitude)) {
+    errors.lattitude = "Lattitude is required";
+  }
+
+  //longitude
+  if (validator.isEmpty(data.longitude)) {
+    errors.longitude = "Longitude is required";
+  }
+
+  //availability
+  if (validator.isEmpty(data.availability)) {
+    errors.availability = "Availability is required";
+  }
+
   return {
     errors,
-    isValid: isEmpty(errors)
+    isValid: isEmpty(errors),
   };
 };
