@@ -170,6 +170,4 @@ router.get(
   }
 );
 
-//patient appointment
-//router.delete
 module.exports = router;
