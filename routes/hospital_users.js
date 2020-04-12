@@ -1,5 +1,6 @@
 const express = require("express");
 const HospitalUser = require("../models/HospitalUser");
+const Appointment = require("../models/Appointment");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
@@ -33,6 +34,13 @@ router.post("/register", (req, res) => {
         availability: req.body.availability,
         contact: req.body.contact,
       });
+      const newAppointent = new Appointment({
+        appointments: [],
+      });
+      newAppointent.save().then((appointment) => {
+        newUser.appointment = appointment;
+      });
+
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;

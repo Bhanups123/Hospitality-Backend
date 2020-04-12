@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+// const Appointment = require("./Appointment");
 
 const hospitalUserSchema = mongoose.Schema({
   name: {
@@ -33,6 +34,10 @@ const hospitalUserSchema = mongoose.Schema({
   availability: {
     type: Number,
     required: true,
+  },
+  appointment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Appointment",
   },
 });
 
