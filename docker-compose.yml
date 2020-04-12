@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  app-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hospitality-node
+    restart: always
+    ports:
+      - "5000:5000"
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+
+
+
+networks:
+  backend:
+
+volumes:
+  data:
+
