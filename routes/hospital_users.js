@@ -11,6 +11,7 @@ const router = express.Router();
 //load input validation
 const validateRegisterInput = require("../validation/hospital user/register");
 const validateLoginInput = require("../validation/login");
+const isEmpty = require("../validation/is-empty");
 
 //register route
 router.post("/register", (req, res) => {
@@ -31,7 +32,8 @@ router.post("/register", (req, res) => {
         password: req.body.password,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
-        availability: req.body.availability,
+        doctors: req.body.doctors,
+        beds: req.body.beds,
         contact: req.body.contact,
       });
       const newAppointent = new Appointment({
@@ -80,7 +82,8 @@ router.post("/login", (req, res) => {
           email: hospital.email,
           latitude: hospital.latitude,
           longitude: hospital.longitude,
-          availability: hospital.availability,
+          doctors: hospital.doctors,
+          beds: hospital.beds,
           contact: hospital.contact,
           userType: "hospital",
         }; //create jwt payload
@@ -128,7 +131,9 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     HospitalUser.findOne({ email: req.user.email }).then((hospital) => {
-      hospital.availability = req.body.availability;
+      const { beds, doctors } = req.body;
+      if (!isEmpty(beds)) hospital.beds = beds;
+      if (!isEmpty(doctors)) hospital.doctors = doctors;
       hospital
         .save()
         .then((user_s) => res.json({ success: "true" }))
