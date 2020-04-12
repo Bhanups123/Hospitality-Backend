@@ -11,7 +11,12 @@ module.exports = function validateRegisterInput(data) {
   data.contact = isEmpty(data.contact) ? "" : data.contact;
   data.availability = isEmpty(data.availability) ? "" : data.availability;
   data.latitude = isEmpty(data.latitude) ? "" : data.latitude;
-  data.longitude = isEmpty(data.longitude) ? "" : data.longitude;
+  data.website = isEmpty(data.website) ? "" : data.website;
+  data.note = isEmpty(data.note) ? "" : data.note;
+  data.totalBeds = isEmpty(data.totalBeds) ? "" : data.totalBeds;
+  data.totalDoctors = isEmpty(data.totalDoctors) ? "" : data.totalDoctors;
+  data.doctors = isEmpty(data.doctors) ? "" : data.doctors;
+  data.beds = isEmpty(data.beds) ? "" : data.beds;
 
   //name
   if (!validator.isLength(data.name, { min: 2, max: 30 })) {
@@ -70,6 +75,36 @@ module.exports = function validateRegisterInput(data) {
   //availability
   if (validator.isEmpty(data.availability)) {
     errors.availability = "Availability is required";
+  }
+
+  //doctors
+  if (validator.isEmpty(data.doctors)) {
+    errors.doctors = "Doctors is required";
+  }
+
+  //beds
+  if (validator.isEmpty(data.beds)) {
+    errors.beds = "Beds is required";
+  }
+
+  //note
+  if (validator.isEmpty(data.note)) {
+    errors.note = "note is required";
+  }
+
+  //totalBeds
+  if (validator.isEmpty(data.totalBeds)) {
+    errors.totalBeds = "totalBeds is required";
+  }
+
+  //totalDoctors
+  if (validator.isEmpty(data.totalDoctors)) {
+    errors.totalDoctors = "totalDoctors is required";
+  }
+
+  //website
+  if (validator.isEmpty(data.website)) {
+    errors.website = "websites is required";
   }
 
   return {

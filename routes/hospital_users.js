@@ -35,6 +35,11 @@ router.post("/register", (req, res) => {
         doctors: req.body.doctors,
         beds: req.body.beds,
         contact: req.body.contact,
+        website: req.body.website,
+        availability: req.body.availability,
+        totalBeds: req.body.totalBeds,
+        totalDoctors: req.body.totalDoctors,
+        note: req.body.note,
       });
       const newAppointent = new Appointment({
         appointments: [],
@@ -85,6 +90,11 @@ router.post("/login", (req, res) => {
           doctors: hospital.doctors,
           beds: hospital.beds,
           contact: hospital.contact,
+          website: hospital.website,
+          totalBeds: hospital.totalBeds,
+          totalDoctors: hospital.totalDoctors,
+          availability: hospital.availability,
+          note: hospital.note,
           userType: "hospital",
         }; //create jwt payload
 
@@ -131,9 +141,11 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     HospitalUser.findOne({ email: req.user.email }).then((hospital) => {
-      const { beds, doctors } = req.body;
+      const { beds, doctors, availability } = req.body;
       if (!isEmpty(beds)) hospital.beds = beds;
       if (!isEmpty(doctors)) hospital.doctors = doctors;
+      if (!isEmpty(availability)) hospital.availability = availability;
+
       hospital
         .save()
         .then((user_s) => res.json({ success: "true" }))

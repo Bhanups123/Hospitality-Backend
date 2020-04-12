@@ -37,6 +37,12 @@ router.get("/hospitals", (req, res) => {
           hosp_dist.distance = dist;
           hosp_dist.latitude = hospital.latitude;
           hosp_dist.longitude = hospital.longitude;
+          hosp_dist.beds = hospital.beds;
+          hosp_dist.doctors = hospital.doctors;
+          hosp_dist.totalDoctors = hospital.totalDoctors;
+          hosp_dist.totalBeds = hospital.totalBeds;
+          hosp_dist.website = hospital.website;
+          hosp_dist.note = hospital.note;
 
           return hosp_dist;
         });

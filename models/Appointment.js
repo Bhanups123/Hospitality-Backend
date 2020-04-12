@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const PatientUser = require("../models/PatientUser");
 
 const appointmentSchema = mongoose.Schema({
   appointments: [
