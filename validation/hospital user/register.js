@@ -8,7 +8,7 @@ module.exports = function validateRegisterInput(data) {
   data.email = isEmpty(data.email) ? "" : data.email;
   data.password = isEmpty(data.password) ? "" : data.password;
   data.password2 = isEmpty(data.password2) ? "" : data.password2;
-  data.contact = isEmpty(data.contact) ? "" : data.contact;
+  data.phoneNumber = isEmpty(data.phoneNumber) ? "" : data.phoneNumber;
   data.availability = isEmpty(data.availability) ? "" : data.availability;
   data.latitude = isEmpty(data.latitude) ? "" : data.latitude;
   data.website = isEmpty(data.website) ? "" : data.website;
@@ -47,24 +47,24 @@ module.exports = function validateRegisterInput(data) {
 
   //confirm password
   if (!validator.equals(data.password, data.password2)) {
-    errors.password2 = "password must match";
+    errors.password2 = "Password must match";
   }
 
   if (validator.isEmpty(data.password2)) {
     errors.password2 = "Confirm Password is required";
   }
 
-  // contact
-  if (!validator.isLength(data.contact, { min: 10, max: 10 })) {
-    errors.contact = "Contact must be 10 digits";
+  // phoneNumber
+  if (!validator.isLength(data.phoneNumber, { min: 10, max: 10 })) {
+    errors.phoneNumber = "Phone Number must be 10 digits";
   }
 
-  if (validator.isEmpty(data.contact)) {
-    errors.contact = "Contact is required";
+  if (validator.isEmpty(data.phoneNumber)) {
+    errors.phoneNumber = "Phone Number is required";
   }
   //latitude
   if (validator.isEmpty(data.latitude)) {
-    errors.latitude = "latitude is required";
+    errors.latitude = "Latitude is required";
   }
 
   //longitude
@@ -79,32 +79,32 @@ module.exports = function validateRegisterInput(data) {
 
   //doctors
   if (validator.isEmpty(data.doctors)) {
-    errors.doctors = "Doctors is required";
+    errors.doctors = "Doctor count is required";
   }
 
   //beds
   if (validator.isEmpty(data.beds)) {
-    errors.beds = "Beds is required";
+    errors.beds = "Bed count is required";
   }
 
   //note
   if (validator.isEmpty(data.note)) {
-    errors.note = "note is required";
+    errors.note = "Note is required";
   }
 
   //totalBeds
   if (validator.isEmpty(data.totalBeds)) {
-    errors.totalBeds = "totalBeds is required";
+    errors.totalBeds = "Total bed count is required";
   }
 
   //totalDoctors
   if (validator.isEmpty(data.totalDoctors)) {
-    errors.totalDoctors = "totalDoctors is required";
+    errors.totalDoctors = "Total doctor count is required";
   }
 
   //website
   if (validator.isEmpty(data.website)) {
-    errors.website = "websites is required";
+    errors.website = "Website is required";
   }
 
   return {
