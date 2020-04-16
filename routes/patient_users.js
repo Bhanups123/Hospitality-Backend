@@ -31,6 +31,7 @@ router.post("/register", (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
+        address: req.body.address,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
         phoneNumber: req.body.phoneNumber,
@@ -99,7 +100,23 @@ router.post("/login", (req, res) => {
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {}
+  (req, res) => {
+    PatientUser.findOne({ email: req.user.email })
+      .then((patient) => {
+        let patient_info = {};
+
+        patient_info.name = patient.name;
+        patient_info.email = patient.email;
+        patient_info.phoneNumber = patient.phoneNumber;
+        patient_info.latitude = patient.latitude;
+        patient_info.longitude = patient.longitude;
+        patient_info.date = patient.date;
+        patient_info.address = patient.address;
+
+        res.json(patient_info);
+      })
+      .catch((err) => res.json(err));
+  }
 );
 
 //nearby hospitals
