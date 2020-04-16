@@ -14,59 +14,6 @@ const distCalc = require("../utils/distCalc");
 const validateRegisterInput = require("../validation/patient user/register");
 const validateLoginInput = require("../validation/login");
 
-//nearby hospitals route
-router.get("/hospitals", (req, res) => {
-  const { latitude, longitude, range } = req.query;
-  HospitalUser.find({})
-    .then((hospitals) => {
-      if (hospitals.length === 0) {
-        res.status(404).json({ notFound: "No hospital found" });
-      } else {
-        let arr = hospitals.map((hospital) => {
-          let hosp_dist = {};
-
-          const dist = distCalc(
-            latitude,
-            longitude,
-            hospital.latitude,
-            hospital.longitude
-          );
-
-          hosp_dist.name = hospital.name;
-          hosp_dist.contact = hospital.contact;
-          hosp_dist.distance = dist;
-          hosp_dist.latitude = hospital.latitude;
-          hosp_dist.longitude = hospital.longitude;
-          hosp_dist.beds = hospital.beds;
-          hosp_dist.doctors = hospital.doctors;
-          hosp_dist.totalDoctors = hospital.totalDoctors;
-          hosp_dist.totalBeds = hospital.totalBeds;
-          hosp_dist.website = hospital.website;
-          hosp_dist.note = hospital.note;
-
-          return hosp_dist;
-        });
-        arr = arr.filter((hospital) => hospital.distance <= range);
-
-        if (arr.length === 0) {
-          res.status(404).json({ notFound: "No nearby hospital found" });
-        } else {
-          res.json(arr);
-        }
-      }
-    })
-    .catch((err) => res.json(err));
-});
-
-//selected hospital
-router.get("/hospitals/:id", (req, res) => {
-  HospitalUser.findOne({ _id: req.params.id })
-    .then((hospital) => {
-      res.json(hospital);
-    })
-    .catch((err) => res.json(err));
-});
-
 //register route
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -86,7 +33,7 @@ router.post("/register", (req, res) => {
         password: req.body.password,
         latitude: req.body.latitude,
         longitude: req.body.longitude,
-        contact: req.body.contact,
+        phoneNumber: req.body.phoneNumber,
       });
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -122,13 +69,9 @@ router.post("/login", (req, res) => {
       if (isMatch) {
         //patient matched
         const payload = {
-          id: patient.id,
+          id: patient._id,
           name: patient.name,
           email: patient.email,
-          latitude: patient.latitude,
-          longitude: patient.longitude,
-          availability: patient.availability,
-          contact: patient.contact,
           userType: "patient",
         }; //create jwt payload
 
@@ -150,6 +93,66 @@ router.post("/login", (req, res) => {
       }
     });
   });
+});
+
+//patient info
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {}
+);
+
+//nearby hospitals
+router.get("/hospitals", (req, res) => {
+  const { latitude, longitude, range } = req.query;
+  HospitalUser.find({})
+    .then((hospitals) => {
+      if (hospitals.length === 0) {
+        res.status(404).json({ notFound: "No hospital found" });
+      } else {
+        let arr = hospitals.map((hospital) => {
+          let hosp_dist = {};
+
+          const dist = distCalc(
+            latitude,
+            longitude,
+            hospital.latitude,
+            hospital.longitude
+          );
+
+          hosp_dist.name = hospital.name;
+          hosp_dist.phoneNumber = hospital.phoneNumber;
+          hosp_dist.distance = dist;
+          hosp_dist.latitude = hospital.latitude;
+          hosp_dist.longitude = hospital.longitude;
+          hosp_dist.beds = hospital.beds;
+          hosp_dist.doctors = hospital.doctors;
+          hosp_dist.totalDoctors = hospital.totalDoctors;
+          hosp_dist.totalBeds = hospital.totalBeds;
+          hosp_dist.website = hospital.website;
+          hosp_dist.note = hospital.note;
+
+          return hosp_dist;
+        });
+        arr = arr.filter((hospital) => hospital.distance <= range);
+
+        if (arr.length === 0) {
+          res.status(404).json({ notFound: "No nearby hospital found" });
+        } else {
+          res.json(arr);
+        }
+      }
+    })
+    .catch((err) => res.json(err));
+});
+
+//selected hospital
+router.get("/hospitals/:id", (req, res) => {
+  HospitalUser.findOne({ _id: req.params.id })
+    .then((hospital) => {
+      res.json(hospital);
+    })
+    .catch((err) => res.json(err));
 });
 
 //patient appointment
