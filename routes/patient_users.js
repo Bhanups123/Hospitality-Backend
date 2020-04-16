@@ -13,6 +13,7 @@ const distCalc = require("../utils/distCalc");
 //load input validation
 const validateRegisterInput = require("../validation/patient user/register");
 const validateLoginInput = require("../validation/login");
+const isEmpty = require("../validation/is-empty");
 
 //register route
 router.post("/register", (req, res) => {
@@ -128,7 +129,7 @@ router.get(
 );
 
 //patient info update
-router.get(
+router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
