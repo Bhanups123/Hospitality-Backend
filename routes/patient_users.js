@@ -169,7 +169,7 @@ router.get("/hospitals", (req, res) => {
         res.status(404).json({ notFound: "No hospital found" });
       } else {
         let arr = hospitals.map((hospital) => {
-          let hosp_dist = hospital;
+          let hosp_dist = { ...hospital };
 
           const dist = distCalc(
             latitude,
@@ -177,13 +177,14 @@ router.get("/hospitals", (req, res) => {
             hospital.latitude,
             hospital.longitude
           );
+          hosp_dist.distance = dist;
 
           for (p in hosp_dist) {
             if (p == "password") {
               hosp_dist[p] = undefined;
             }
           }
-          hosp_dist.distance = dist;
+
           return hosp_dist;
         });
         arr = arr.filter((hospital) => hospital.distance <= range);
