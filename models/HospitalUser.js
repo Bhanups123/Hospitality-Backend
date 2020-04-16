@@ -22,7 +22,7 @@ const hospitalUserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  contact: {
+  phoneNumber: {
     type: Number,
     required: true,
   },
@@ -62,8 +62,12 @@ const hospitalUserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  enable: {
+    type: Boolean,
+    default: false,
+  },
 });
- 
+
 module.exports = HospitalUser = mongoose.model(
   "HospitalUser",
   hospitalUserSchema
