@@ -128,7 +128,7 @@ router.get("/hospitals", (req, res) => {
         res.status(404).json({ notFound: "No hospital found" });
       } else {
         let arr = hospitals.map((hospital) => {
-          let hosp_dist = {};
+          let hosp_dist = hospital;
 
           const dist = distCalc(
             latitude,
@@ -137,18 +137,12 @@ router.get("/hospitals", (req, res) => {
             hospital.longitude
           );
 
-          hosp_dist.name = hospital.name;
-          hosp_dist.phoneNumber = hospital.phoneNumber;
+          for (p in hosp_dist) {
+            if (p == "password") {
+              hosp_dist[p] = undefined;
+            }
+          }
           hosp_dist.distance = dist;
-          hosp_dist.latitude = hospital.latitude;
-          hosp_dist.longitude = hospital.longitude;
-          hosp_dist.beds = hospital.beds;
-          hosp_dist.doctors = hospital.doctors;
-          hosp_dist.totalDoctors = hospital.totalDoctors;
-          hosp_dist.totalBeds = hospital.totalBeds;
-          hosp_dist.website = hospital.website;
-          hosp_dist.note = hospital.note;
-
           return hosp_dist;
         });
         arr = arr.filter((hospital) => hospital.distance <= range);
