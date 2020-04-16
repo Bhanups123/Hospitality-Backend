@@ -27,15 +27,26 @@ router.post("/register", (req, res) => {
       errors.email = "email already exist";
       return res.status(400).json(errors);
     } else {
+      const {
+        name,
+        email,
+        password,
+        address,
+        latitude,
+        longitude,
+        phoneNumber,
+      } = req.body;
+
       const newUser = new PatientUser({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        address: req.body.address,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        phoneNumber: req.body.phoneNumber,
+        name,
+        email,
+        password,
+        address,
+        latitude,
+        longitude,
+        phoneNumber,
       });
+
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
@@ -103,16 +114,13 @@ router.get(
   (req, res) => {
     PatientUser.findOne({ email: req.user.email })
       .then((patient) => {
-        let patient_info = {};
+        let patient_info = patient;
 
-        patient_info.name = patient.name;
-        patient_info.email = patient.email;
-        patient_info.phoneNumber = patient.phoneNumber;
-        patient_info.latitude = patient.latitude;
-        patient_info.longitude = patient.longitude;
-        patient_info.date = patient.date;
-        patient_info.address = patient.address;
-
+        for (p in patient_info) {
+          if (p == "password") {
+            patient_info[p] = undefined;
+          }
+        }
         res.json(patient_info);
       })
       .catch((err) => res.json(err));
