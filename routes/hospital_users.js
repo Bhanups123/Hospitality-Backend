@@ -26,21 +26,38 @@ router.post("/register", (req, res) => {
       errors.email = "email already exist";
       return res.status(400).json(errors);
     } else {
+      const {
+        name,
+        email,
+        password,
+        latitude,
+        longitude,
+        doctors,
+        beds,
+        phoneNumber,
+        website,
+        availability,
+        totalBeds,
+        totalDoctors,
+        note,
+      } = req.body;
+
       const newUser = new HospitalUser({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        doctors: req.body.doctors,
-        beds: req.body.beds,
-        phoneNumber: req.body.phoneNumber,
-        website: req.body.website,
-        availability: req.body.availability,
-        totalBeds: req.body.totalBeds,
-        totalDoctors: req.body.totalDoctors,
-        note: req.body.note,
+        name,
+        email,
+        password,
+        latitude,
+        longitude,
+        doctors,
+        beds,
+        phoneNumber,
+        website,
+        availability,
+        totalBeds,
+        totalDoctors,
+        note,
       });
+
       const newAppointent = new Appointment({
         appointments: [],
       });
@@ -109,23 +126,6 @@ router.post("/login", (req, res) => {
   });
 });
 
-//private route
-
-// router.get(
-//   "/current",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     res.json({
-//       name: req.user.name,
-//       email: req.user.email,
-//       latitude: req.user.latitude,
-//       longitude: req.user.longitude,
-//       availability: req.user.availability,
-//       phoneNumber: req.user.phoneNumber,
-//     });
-//   }
-// );
-
 //hospital info
 router.get(
   "/",
@@ -146,7 +146,7 @@ router.get(
   }
 );
 
-//update information route
+//update information
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
