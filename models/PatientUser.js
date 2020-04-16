@@ -34,6 +34,10 @@ const patientUserSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  enable: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = PatientUser = mongoose.model("PatientUser", patientUserSchema);
