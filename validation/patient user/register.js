@@ -8,7 +8,7 @@ module.exports = function validateRegisterInput(data) {
   data.email = isEmpty(data.email) ? "" : data.email;
   data.password = isEmpty(data.password) ? "" : data.password;
   data.password2 = isEmpty(data.password2) ? "" : data.password2;
-  data.contact = isEmpty(data.contact) ? "" : data.contact;
+  data.phoneNumber = isEmpty(data.phoneNumber) ? "" : data.phoneNumber;
   data.latitude = isEmpty(data.latitude) ? "" : data.latitude;
   data.longitude = isEmpty(data.longitude) ? "" : data.longitude;
 
@@ -49,12 +49,12 @@ module.exports = function validateRegisterInput(data) {
   }
 
   // contact
-  if (!validator.isLength(data.contact, { min: 10, max: 10 })) {
-    errors.contact = "Contact must be 10 digits";
+  if (!validator.isLength(data.phoneNumber, { min: 10, max: 10 })) {
+    errors.phoneNumber = "Phone Number must be 10 digits";
   }
 
-  if (validator.isEmpty(data.contact)) {
-    errors.contact = "Contact is required";
+  if (validator.isEmpty(data.phoneNumber)) {
+    errors.phoneNumber = "Phone Number is required";
   }
   //latitude
   if (validator.isEmpty(data.latitude)) {
