@@ -152,10 +152,30 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     HospitalUser.findOne({ email: req.user.email }).then((hospital) => {
-      const { beds, doctors, availability } = req.body;
+      const {
+        beds,
+        doctors,
+        availability,
+        phoneNumber,
+        totalDoctors,
+        totalBeds,
+        note,
+        website,
+        email,
+      } = req.body;
+
       if (!isEmpty(beds)) hospital.beds = beds;
       if (!isEmpty(doctors)) hospital.doctors = doctors;
       if (!isEmpty(availability)) hospital.availability = availability;
+      if (!isEmpty(phoneNumber)) hospital.phoneNumber = phoneNumber;
+      if (!isEmpty(totalDoctors)) hospital.totalDoctors = totalDoctors;
+      if (!isEmpty(totalBeds)) hospital.totalBeds = totalBeds;
+      if (!isEmpty(note)) hospital.note = note;
+      if (!isEmpty(website)) hospital.website = website;
+      if (!isEmpty(email)) {
+        hospital.email = email;
+        hospital.enable = false;
+      }
 
       hospital
         .save()
