@@ -34,7 +34,7 @@ router.post("/register", (req, res) => {
         longitude: req.body.longitude,
         doctors: req.body.doctors,
         beds: req.body.beds,
-        contact: req.body.contact,
+        phoneNumber: req.body.phoneNumber,
         website: req.body.website,
         availability: req.body.availability,
         totalBeds: req.body.totalBeds,
@@ -85,15 +85,6 @@ router.post("/login", (req, res) => {
           id: hospital.id,
           name: hospital.name,
           email: hospital.email,
-          latitude: hospital.latitude,
-          longitude: hospital.longitude,
-          doctors: hospital.doctors,
-          beds: hospital.beds,
-          contact: hospital.contact,
-          website: hospital.website,
-          totalBeds: hospital.totalBeds,
-          totalDoctors: hospital.totalDoctors,
-          availability: hospital.availability,
           note: hospital.note,
           userType: "hospital",
         }; //create jwt payload
@@ -130,7 +121,7 @@ router.post("/login", (req, res) => {
 //       latitude: req.user.latitude,
 //       longitude: req.user.longitude,
 //       availability: req.user.availability,
-//       contact: req.user.contact,
+//       phoneNumber: req.user.phoneNumber,
 //     });
 //   }
 // );
