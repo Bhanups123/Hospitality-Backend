@@ -126,14 +126,20 @@ router.post("/login", (req, res) => {
 //   }
 // );
 
-//selected hospital info
+//hospital info
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    HospitalUser.findOne({ _id: req.params.id })
+    HospitalUser.findOne({ email: req.user.email })
       .then((hospital) => {
-        const hospital_info = hospital.filter((prop) => prop !== "password");
+        let hospital_info = hospital;
+
+        for (p in hospital_info) {
+          if (p == "password") {
+            hospital_info[p] = undefined;
+          }
+        }
         res.json(hospital_info);
       })
       .catch((err) => res.json(err));
