@@ -11,6 +11,7 @@ module.exports = function validateRegisterInput(data) {
   data.phoneNumber = isEmpty(data.phoneNumber) ? "" : data.phoneNumber;
   data.latitude = isEmpty(data.latitude) ? "" : data.latitude;
   data.longitude = isEmpty(data.longitude) ? "" : data.longitude;
+  data.address = isEmpty(data.address) ? "" : data.address;
 
   //name
   if (!validator.isLength(data.name, { min: 2, max: 30 })) {
@@ -41,7 +42,7 @@ module.exports = function validateRegisterInput(data) {
 
   //confirm password
   if (!validator.equals(data.password, data.password2)) {
-    errors.password2 = "password must match";
+    errors.password2 = "Password must match";
   }
 
   if (validator.isEmpty(data.password2)) {
@@ -58,12 +59,17 @@ module.exports = function validateRegisterInput(data) {
   }
   //latitude
   if (validator.isEmpty(data.latitude)) {
-    errors.latitude = "latitude is required";
+    errors.latitude = "Latitude is required";
   }
 
   //longitude
   if (validator.isEmpty(data.longitude)) {
     errors.longitude = "Longitude is required";
+  }
+
+  //address
+  if (validator.isEmpty(data.address)) {
+    errors.address = "Address is required";
   }
 
   return {
