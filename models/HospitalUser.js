@@ -63,7 +63,7 @@ const hospitalUserSchema = mongoose.Schema({
     required: true,
   },
 });
-
+ 
 module.exports = HospitalUser = mongoose.model(
   "HospitalUser",
   hospitalUserSchema
