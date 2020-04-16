@@ -18,8 +18,12 @@ const patientUserSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  contact: {
+  phoneNumber: {
     type: Number,
+    required: true,
+  },
+  address: {
+    type: String,
     required: true,
   },
   latitude: {
@@ -29,6 +33,10 @@ const patientUserSchema = mongoose.Schema({
   longitude: {
     type: Number,
     required: true,
+  },
+  enable: {
+    type: Boolean,
+    default: false,
   },
 });
 

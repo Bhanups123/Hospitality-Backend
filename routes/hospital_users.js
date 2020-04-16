@@ -26,21 +26,38 @@ router.post("/register", (req, res) => {
       errors.email = "email already exist";
       return res.status(400).json(errors);
     } else {
+      const {
+        name,
+        email,
+        password,
+        latitude,
+        longitude,
+        doctors,
+        beds,
+        phoneNumber,
+        website,
+        availability,
+        totalBeds,
+        totalDoctors,
+        note,
+      } = req.body;
+
       const newUser = new HospitalUser({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        doctors: req.body.doctors,
-        beds: req.body.beds,
-        contact: req.body.contact,
-        website: req.body.website,
-        availability: req.body.availability,
-        totalBeds: req.body.totalBeds,
-        totalDoctors: req.body.totalDoctors,
-        note: req.body.note,
+        name,
+        email,
+        password,
+        latitude,
+        longitude,
+        doctors,
+        beds,
+        phoneNumber,
+        website,
+        availability,
+        totalBeds,
+        totalDoctors,
+        note,
       });
+
       const newAppointent = new Appointment({
         appointments: [],
       });
@@ -85,15 +102,6 @@ router.post("/login", (req, res) => {
           id: hospital.id,
           name: hospital.name,
           email: hospital.email,
-          latitude: hospital.latitude,
-          longitude: hospital.longitude,
-          doctors: hospital.doctors,
-          beds: hospital.beds,
-          contact: hospital.contact,
-          website: hospital.website,
-          totalBeds: hospital.totalBeds,
-          totalDoctors: hospital.totalDoctors,
-          availability: hospital.availability,
           note: hospital.note,
           userType: "hospital",
         }; //create jwt payload
@@ -118,24 +126,27 @@ router.post("/login", (req, res) => {
   });
 });
 
-//private route
+//hospital info
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    HospitalUser.findOne({ email: req.user.email })
+      .then((hospital) => {
+        let hospital_info = hospital;
 
-// router.get(
-//   "/current",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     res.json({
-//       name: req.user.name,
-//       email: req.user.email,
-//       latitude: req.user.latitude,
-//       longitude: req.user.longitude,
-//       availability: req.user.availability,
-//       contact: req.user.contact,
-//     });
-//   }
-// );
+        for (p in hospital_info) {
+          if (p == "password") {
+            hospital_info[p] = undefined;
+          }
+        }
+        res.json(hospital_info);
+      })
+      .catch((err) => res.json(err));
+  }
+);
 
-//update information route
+//update information
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
