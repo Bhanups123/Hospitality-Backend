@@ -127,6 +127,39 @@ router.get(
   }
 );
 
+//patient info update
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    PatientUser.findOne({ email: req.user.email }).then((patient) => {
+      const {
+        email,
+        name,
+        phoneNumber,
+        address,
+        latitude,
+        longitude,
+      } = req.body;
+
+      if (!isEmpty(name)) patient.name = name;
+      if (!isEmpty(phoneNumber)) patient.phoneNumber = phoneNumber;
+      if (!isEmpty(address)) patient.address = address;
+      if (!isEmpty(latitude)) patient.latitude = latitude;
+      if (!isEmpty(longitude)) patient.longitude = longitude;
+      if (!isEmpty(email)) {
+        patient.email = email;
+        patient.enable = false;
+      }
+
+      patient
+        .save()
+        .then((user_s) => res.json({ success: "true" }))
+        .catch((err) => res.json(err));
+    });
+  }
+);
+
 //nearby hospitals
 router.get("/hospitals", (req, res) => {
   const { latitude, longitude, range } = req.query;
@@ -136,7 +169,7 @@ router.get("/hospitals", (req, res) => {
         res.status(404).json({ notFound: "No hospital found" });
       } else {
         let arr = hospitals.map((hospital) => {
-          let hosp_dist = hospital;
+          let hosp_dist = { ...hospital };
 
           const dist = distCalc(
             latitude,
@@ -144,13 +177,14 @@ router.get("/hospitals", (req, res) => {
             hospital.latitude,
             hospital.longitude
           );
+          hosp_dist.distance = dist;
 
           for (p in hosp_dist) {
             if (p == "password") {
               hosp_dist[p] = undefined;
             }
           }
-          hosp_dist.distance = dist;
+
           return hosp_dist;
         });
         arr = arr.filter((hospital) => hospital.distance <= range);
