@@ -163,15 +163,6 @@ router.get("/hospitals", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-//selected hospital
-router.get("/hospitals/:id", (req, res) => {
-  HospitalUser.findOne({ _id: req.params.id })
-    .then((hospital) => {
-      res.json(hospital);
-    })
-    .catch((err) => res.json(err));
-});
-
 //patient appointment
 router.get(
   "/hospitals/:id/patient",
