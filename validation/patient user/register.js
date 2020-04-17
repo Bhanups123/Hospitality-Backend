@@ -13,14 +13,14 @@ module.exports = function validateRegisterInput(data) {
   data.longitude = isEmpty(data.longitude) ? "" : data.longitude;
   data.address = isEmpty(data.address) ? "" : data.address;
 
-  //name
-  if (!validator.isLength(data.name, { min: 2, max: 30 })) {
-    errors.name = "Name must be between 2 and 30 characters";
-  }
+  // //name
+  // if (!validator.isLength(data.name, { min: 2, max: 30 })) {
+  //   errors.name = "Name must be between 2 and 30 characters";
+  // }
 
-  if (validator.isEmpty(data.name)) {
-    errors.name = "Name is required";
-  }
+  // if (validator.isEmpty(data.name)) {
+  //   errors.name = "Name is required";
+  // }
 
   //email
   if (!validator.isEmail(data.email)) {
@@ -49,28 +49,28 @@ module.exports = function validateRegisterInput(data) {
     errors.password2 = "Confirm Password is required";
   }
 
-  // contact
-  if (!validator.isLength(data.phoneNumber, { min: 10, max: 10 })) {
-    errors.phoneNumber = "Phone Number must be 10 digits";
-  }
+  // // contact
+  // if (!validator.isLength(data.phoneNumber, { min: 10, max: 10 })) {
+  //   errors.phoneNumber = "Phone Number must be 10 digits";
+  // }
 
-  if (validator.isEmpty(data.phoneNumber)) {
-    errors.phoneNumber = "Phone Number is required";
-  }
-  //latitude
-  if (validator.isEmpty(data.latitude)) {
-    errors.latitude = "Latitude is required";
-  }
+  // if (validator.isEmpty(data.phoneNumber)) {
+  //   errors.phoneNumber = "Phone Number is required";
+  // }
+  // //latitude
+  // if (validator.isEmpty(data.latitude)) {
+  //   errors.latitude = "Latitude is required";
+  // }
 
-  //longitude
-  if (validator.isEmpty(data.longitude)) {
-    errors.longitude = "Longitude is required";
-  }
+  // //longitude
+  // if (validator.isEmpty(data.longitude)) {
+  //   errors.longitude = "Longitude is required";
+  // }
 
-  //address
-  if (validator.isEmpty(data.address)) {
-    errors.address = "Address is required";
-  }
+  // //address
+  // if (validator.isEmpty(data.address)) {
+  //   errors.address = "Address is required";
+  // }
 
   return {
     errors,
