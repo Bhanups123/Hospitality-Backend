@@ -205,29 +205,30 @@ router.get("/hospitals", (req, res) => {
 });
 
 //patient appointment
-router.get(
-  "/hospitals/:id/patient",
+router.post(
+  "/hospital/appointment",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    HospitalUser.findOne({ _id: req.params.id })
-      .populate("appointment")
+    const { email, note } = req.body;
+    if (isEmpty(email))
+      return res.status(400).json({ error: "Hospital Email is required" });
+
+    HospitalUser.findOne({ email })
+      .populate("appointments")
       .exec((err, hospital) => {
         if (err) return res.json(err);
-        PatientUser.findOne({ email: req.user.email }).then((patient) => {
-          let newAppointmentPat = {};
-          newAppointmentPat.id = hospital;
-          newAppointmentPat.status = "Pending";
 
+        PatientUser.findOne({ email: req.user.email }).then((patient) => {
+          let newAppointmentPat = { email, note };
           patient.appointments.push(newAppointmentPat);
           patient.save();
         });
-        let newAppointmentHos = {};
-        newAppointmentHos.id = req.user;
-        newAppointmentHos.status = "Pending";
 
-        hospital.appointment.appointments.push(newAppointmentHos);
-        hospital.appointment.save();
+        let newAppointmentHos = { id: req.user, note };
+
+        hospital.appointment.push(newAppointmentHos);
         hospital.save();
+
         res.json({ success: "true" });
       });
   }
