@@ -46,10 +46,25 @@ const hospitalUserSchema = mongoose.Schema({
   availability: {
     type: Boolean,
   },
-  appointment: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Appointment",
-  },
+  appointment: [
+    {
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "PatientUser",
+      },
+      status: {
+        type: String,
+        default: "Pending",
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+      note: {
+        type: String,
+      },
+    },
+  ],
   note: {
     type: String,
   },

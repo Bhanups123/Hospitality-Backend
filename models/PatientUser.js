@@ -44,6 +44,13 @@ const patientUserSchema = mongoose.Schema({
       status: {
         type: String,
       },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+      note: {
+        type: String,
+      },
     },
   ],
 });
