@@ -30,42 +30,20 @@ router.post("/register", (req, res) => {
       errors.email = "email already exist";
       return res.status(400).json(errors);
     } else {
-      const {
-        name,
-        email,
-        password,
-        latitude,
-        longitude,
-        doctors,
-        beds,
-        phoneNumber,
-        website,
-        availability,
-        totalBeds,
-        totalDoctors,
-        note,
-      } = req.body;
+      const { name, email, password, latitude, longitude } = req.body;
 
-      const newUser = new HospitalUser({
+      let newUser = new HospitalUser({
         name,
         email,
         password,
         latitude,
         longitude,
-        doctors,
-        beds,
-        phoneNumber,
-        website,
-        availability,
-        totalBeds,
-        totalDoctors,
-        note,
       });
 
-      const newAppointent = new Appointment({
+      const newAppointment = new Appointment({
         appointments: [],
       });
-      newAppointent.save().then((appointment) => {
+      newAppointment.save().then((appointment) => {
         newUser.appointment = appointment;
       });
 
@@ -106,7 +84,6 @@ router.post("/login", (req, res) => {
           id: hospital.id,
           name: hospital.name,
           email: hospital.email,
-          note: hospital.note,
           userType: "hospital",
         }; //create jwt payload
 
@@ -183,11 +160,16 @@ router.post(
     });
   }
 );
-router.get(
-  "/appointments",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {}
-);
+
+//appointment list
+// router.get(
+//   "/appointments",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     HospitalUser.find({ email: req.user.email }).populate("");
+//   }
+// );
+
 //patient appointment deletion
 router.delete(
   "/:id_patient",
