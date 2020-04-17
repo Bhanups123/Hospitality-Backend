@@ -1,0 +1,33 @@
+version: "3"
+services:
+  app-server:
+    image: saarthak08/hospitality-node
+    ports:
+      - "5000:5000"
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  visualizer:
+    image: dockersamples/visualizer
+    ports:
+      - "3000:8080"
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  backend:
+
+volumes:
+  data:
+
