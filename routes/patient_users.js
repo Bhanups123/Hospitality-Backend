@@ -15,6 +15,11 @@ const validateRegisterInput = require("../validation/patient user/register");
 const validateLoginInput = require("../validation/login");
 const isEmpty = require("../validation/is-empty");
 
+
+router.get('/test', (req, res) => {
+  res.json({ msg: 'Patient route work' })
+});
+
 //register route
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);

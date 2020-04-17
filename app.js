@@ -1,12 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const passport = require("passport");
 
 const hospital_users = require("./routes/hospital_users");
 const patient_users = require("./routes/patient_users");
 
 const app = express();
+
+mongoose.Promise = global.Promise;
+
+app.use(morgan("dev"));
 
 //body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
