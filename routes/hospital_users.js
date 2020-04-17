@@ -166,8 +166,24 @@ router.get(
       .populate("appointment.id")
       .exec((err, hospital) => {
         if (err) return res.json(err);
-        res.json(hospital);
-        console.log(hospital.appointment[0]);
+
+        const appointments = hospital.appointment.map((appoint) => {
+          let patient = {};
+
+          patient.status = appoint.status;
+          patient.date = appoint.date.getTime();
+          patient.note = appoint.note;
+          patient.name = appoint.id.name;
+          patient.email = appoint.id.email;
+          patient.address = appoint.id.address;
+          patient.phoneNumber = appoint.id.phoneNumber;
+          patient.latitude = appoint.id.latitude;
+          patient.longitude = appoint.id.longitude;
+
+          return patient;
+        });
+
+        res.json(appointments);
       });
   }
 );
