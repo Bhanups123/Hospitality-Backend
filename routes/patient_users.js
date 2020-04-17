@@ -1,7 +1,6 @@
 const express = require("express");
 const HospitalUser = require("../models/HospitalUser");
 const PatientUser = require("../models/PatientUser");
-const Appointment = require("../models/Appointment");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
@@ -229,6 +228,19 @@ router.post(
 
         res.json({ success: "true" });
       });
+  }
+);
+
+//patient appointment list
+router.get(
+  "/appointments",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    PatientUser.findOne({ email: req.user.email })
+      .then((patient) => {
+        res.json(patient.appointments);
+      })
+      .catch((err) => res.json(err));
   }
 );
 
