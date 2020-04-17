@@ -15,9 +15,8 @@ const validateRegisterInput = require("../validation/patient user/register");
 const validateLoginInput = require("../validation/login");
 const isEmpty = require("../validation/is-empty");
 
-
-router.get('/test', (req, res) => {
-  res.json({ msg: 'Patient route work' })
+router.get("/test", (req, res) => {
+  res.json({ msg: "Patient route work" });
 });
 
 //register route
@@ -52,6 +51,8 @@ router.post("/register", (req, res) => {
         longitude,
         phoneNumber,
       });
+
+      // newUser.appointments = [];
 
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -213,7 +214,7 @@ router.get(
       .exec((err, hospital) => {
         if (err) return res.json(err);
         PatientUser.findOne({ email: req.user.email }).then((patient) => {
-          patient.appointment.push(hospital);
+          patient.appointments.push(hospital);
           patient.save();
         });
         hospital.appointment.appointments.push(req.user);
