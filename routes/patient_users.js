@@ -214,10 +214,18 @@ router.get(
       .exec((err, hospital) => {
         if (err) return res.json(err);
         PatientUser.findOne({ email: req.user.email }).then((patient) => {
-          patient.appointments.push(hospital);
+          let newAppointmentPat = {};
+          newAppointmentPat.id = hospital;
+          newAppointmentPat.status = "Pending";
+
+          patient.appointments.push(newAppointmentPat);
           patient.save();
         });
-        hospital.appointment.appointments.push(req.user);
+        let newAppointmentHos = {};
+        newAppointmentHos.id = req.user;
+        newAppointmentHos.status = "Pending";
+
+        hospital.appointment.appointments.push(newAppointmentHos);
         hospital.appointment.save();
         hospital.save();
         res.json({ success: "true" });

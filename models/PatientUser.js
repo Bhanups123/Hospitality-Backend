@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const patientUserSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -20,11 +19,9 @@ const patientUserSchema = mongoose.Schema({
   },
   phoneNumber: {
     type: Number,
-    required: true,
   },
   address: {
     type: String,
-    required: true,
   },
   latitude: {
     type: Number,
@@ -46,7 +43,6 @@ const patientUserSchema = mongoose.Schema({
       },
       status: {
         type: String,
-        default: "Pending",
       },
     },
   ],

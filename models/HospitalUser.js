@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const hospitalUserSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -20,11 +19,9 @@ const hospitalUserSchema = mongoose.Schema({
   },
   website: {
     type: String,
-    required: true,
   },
   phoneNumber: {
     type: Number,
-    required: true,
   },
   latitude: {
     type: Number,
@@ -36,23 +33,18 @@ const hospitalUserSchema = mongoose.Schema({
   },
   beds: {
     type: Number,
-    required: true,
   },
   totalBeds: {
     type: Number,
-    required: true,
   },
   doctors: {
     type: Number,
-    required: true,
   },
   totalDoctors: {
     type: Number,
-    required: true,
   },
   availability: {
     type: Boolean,
-    required: true,
   },
   appointment: {
     type: mongoose.Schema.Types.ObjectId,
@@ -60,7 +52,6 @@ const hospitalUserSchema = mongoose.Schema({
   },
   note: {
     type: String,
-    required: true,
   },
   enable: {
     type: Boolean,
