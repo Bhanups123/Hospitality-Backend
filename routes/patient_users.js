@@ -224,9 +224,7 @@ router.post(
           patient.save();
         });
 
-        let newAppointmentHos = { id: req.user, note };
-
-        hospital.appointment.push(newAppointmentHos);
+        hospital.appointment.push(req.user);
         hospital.save();
 
         res.json({ success: "true" });

@@ -40,13 +40,6 @@ router.post("/register", (req, res) => {
         longitude,
       });
 
-      const newAppointment = new Appointment({
-        appointments: [],
-      });
-      newAppointment.save().then((appointment) => {
-        newUser.appointment = appointment;
-      });
-
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
@@ -142,6 +135,8 @@ router.post(
         totalBeds,
         note,
         website,
+        latitude,
+        longitude,
       } = req.body;
 
       if (!isEmpty(beds)) hospital.beds = beds;
@@ -152,7 +147,8 @@ router.post(
       if (!isEmpty(totalBeds)) hospital.totalBeds = totalBeds;
       if (!isEmpty(note)) hospital.note = note;
       if (!isEmpty(website)) hospital.website = website;
-
+      if (!isEmpty(latitude)) hospital.latitude = latitude;
+      if (!isEmpty(longitude)) hospital.longitude = longitude;
       hospital
         .save()
         .then((user_s) => res.json({ success: "true" }))
@@ -162,13 +158,19 @@ router.post(
 );
 
 //appointment list
-// router.get(
-//   "/appointments",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     HospitalUser.find({ email: req.user.email }).populate("");
-//   }
-// );
+router.get(
+  "/appointments",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    HospitalUser.findOne({ email: req.user.email })
+      .populate("appointment.id")
+      .exec((err, hospital) => {
+        if (err) return res.json(err);
+        res.json(hospital);
+        console.log(hospital.appointment[0]);
+      });
+  }
+);
 
 //patient appointment deletion
 router.delete(

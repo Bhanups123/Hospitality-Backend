@@ -37,12 +37,13 @@ const patientUserSchema = mongoose.Schema({
   },
   appointments: [
     {
-      id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "HospitalUser",
+      email: {
+        type: String,
+        required: true,
       },
       status: {
         type: String,
+        default: "Pending",
       },
       date: {
         type: Date,
