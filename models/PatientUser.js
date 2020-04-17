@@ -40,8 +40,14 @@ const patientUserSchema = mongoose.Schema({
   },
   appointments: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "HospitalUser",
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "HospitalUser",
+      },
+      status: {
+        type: String,
+        default: "Pending",
+      },
     },
   ],
 });
