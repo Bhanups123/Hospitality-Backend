@@ -92,7 +92,7 @@ router.post("/login", (req, res) => {
         jwt.sign(
           payload,
           keys.secretOrKey,
-          { expiresIn: 3600 },
+          { expiresIn: "2d" },
           (err, token) => {
             res.json({
               success: true,
@@ -134,24 +134,13 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     PatientUser.findOne({ email: req.user.email }).then((patient) => {
-      const {
-        email,
-        name,
-        phoneNumber,
-        address,
-        latitude,
-        longitude,
-      } = req.body;
+      const { name, phoneNumber, address, latitude, longitude } = req.body;
 
       if (!isEmpty(name)) patient.name = name;
       if (!isEmpty(phoneNumber)) patient.phoneNumber = phoneNumber;
       if (!isEmpty(address)) patient.address = address;
       if (!isEmpty(latitude)) patient.latitude = latitude;
       if (!isEmpty(longitude)) patient.longitude = longitude;
-      if (!isEmpty(email)) {
-        patient.email = email;
-        patient.enable = false;
-      }
 
       patient
         .save()
@@ -218,11 +207,14 @@ router.get(
       .populate("appointment")
       .exec((err, hospital) => {
         if (err) return res.json(err);
+        PatientUser.findOne({ email: req.user.email }).then((patient) => {
+          patient.appointment.push(hospital);
+          patient.save();
+        });
         hospital.appointment.appointments.push(req.user);
         hospital.appointment.save();
         hospital.save();
-        console.log(hospital);
-        res.json(hospital);
+        res.json({ success: "true" });
       });
   }
 );

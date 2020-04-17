@@ -38,6 +38,12 @@ const patientUserSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  appointments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "HospitalUser",
+    },
+  ],
 });
 
 module.exports = PatientUser = mongoose.model("PatientUser", patientUserSchema);

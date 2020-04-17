@@ -110,7 +110,7 @@ router.post("/login", (req, res) => {
         jwt.sign(
           payload,
           keys.secretOrKey,
-          { expiresIn: 3600 },
+          { expiresIn: "2d" },
           (err, token) => {
             res.json({
               success: true,
@@ -161,7 +161,6 @@ router.post(
         totalBeds,
         note,
         website,
-        email,
       } = req.body;
 
       if (!isEmpty(beds)) hospital.beds = beds;
@@ -172,10 +171,6 @@ router.post(
       if (!isEmpty(totalBeds)) hospital.totalBeds = totalBeds;
       if (!isEmpty(note)) hospital.note = note;
       if (!isEmpty(website)) hospital.website = website;
-      if (!isEmpty(email)) {
-        hospital.email = email;
-        hospital.enable = false;
-      }
 
       hospital
         .save()
