@@ -246,6 +246,13 @@ router.delete(
       const appointment_del_hos = patient.appointments.filter(
         (appointment) => appointment.email == email
       );
+
+      if (appointment_del_hos[0].status !== "Pending")
+        return res.status(403).json({
+          error:
+            "Appointment can't be removed, as no longer in Pending status.",
+        });
+
       const ind_hos = patient.appointments.indexOf(appointment_del_hos);
 
       patient.appointments.splice(ind_hos, 1);
