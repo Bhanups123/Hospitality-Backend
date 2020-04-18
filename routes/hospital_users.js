@@ -166,11 +166,11 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     HospitalUser.findOne({ email: req.user.email })
-      .populate("appointment.id")
+      .populate("appointments.id")
       .exec((err, hospital) => {
         if (err) return res.json(err);
 
-        const appointments = hospital.appointment.map((appoint) => {
+        const appointments = hospital.appointments.map((appoint) => {
           let patient = {};
 
           patient.status = appoint.status;
@@ -200,35 +200,36 @@ router.post(
     //patient's email
     const { confirmation, email } = req.body;
 
-    PatientUser.findOne({ email }).then((patient) => {
-      const appointment_pat = patient.appointments.filter(
-        (appointment_hos) => appointment_hos.email === req.user.email
-      );
-
-      const ind_hos = patient.appointments.indexOf(appointment_pat[0]);
-      console.log(patient, ind_hos);
-      patient.appointments[ind_hos].status = confirmation;
-
-      patient.save();
-
-      HospitalUser.findOne({ email: req.user.email })
-        .populate("appointment.id")
-        .exec((err, hospital) => {
-          const appointment_hos = hospital.appointment.filter((patient) => {
-            if (!isEmpty(patient.id)) return patient.id.email === email;
-          });
-
-          const ind_pat = hospital.appointment.indexOf(appointment_hos[0]);
-
-          hospital.appointment[ind_pat].status = confirmation;
-          hospital.save();
-
-          res.json({
-            success: "true",
-            message: "Appointment confirmation handled successfully.",
-          });
+    PatientUser.findOne({ email })
+      .populate("appointments.id")
+      .exec((err, patient) => {
+        const appointment_pat = patient.appointments.filter((hospital) => {
+          return hospital.id.email === req.user.email;
         });
-    });
+
+        const ind_hos = patient.appointments.indexOf(appointment_pat[0]);
+        patient.appointments[ind_hos].status = confirmation;
+
+        patient.save();
+
+        HospitalUser.findOne({ email: req.user.email })
+          .populate("appointments.id")
+          .exec((err, hospital) => {
+            const appointment_hos = hospital.appointments.filter((patient) => {
+              if (!isEmpty(patient.id)) return patient.id.email === email;
+            });
+
+            const ind_pat = hospital.appointments.indexOf(appointment_hos[0]);
+
+            hospital.appointments[ind_pat].status = confirmation;
+            hospital.save();
+
+            res.json({
+              success: "true",
+              message: "Appointment confirmation handled successfully.",
+            });
+          });
+      });
   }
 );
 
