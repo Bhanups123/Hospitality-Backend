@@ -37,9 +37,9 @@ const patientUserSchema = mongoose.Schema({
   },
   appointments: [
     {
-      email: {
-        type: String,
-        required: true,
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "HospitalUser",
       },
       status: {
         type: String,
