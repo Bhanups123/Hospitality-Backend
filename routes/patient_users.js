@@ -240,18 +240,27 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     //hospital email
-    const { email } = req.body;
+    const { email, date } = req.query;
+
+    console.log(email);
+    console.log("Date:" +date);
 
     if (isEmpty(email))
       return res.status(400).json({ error: "Hospital Email is required" });
+
 
     PatientUser.findOne({ email: req.user.email })
       .populate("appointments.id")
       .exec((err, patient) => {
         const appointment_del_hos = patient.appointments.filter(
-          (appointment) => appointment.id.email === email
+          (appointment)=> {
+            return (appointment.id.email === email && Date.parse(appointment.date).toString() === date.toString());}
         );
 
+        if (isEmpty(appointment_del_hos))
+          return res.status(404).json({
+            error: "No user found with email.",
+          });
         if (appointment_del_hos[0].status !== "Pending")
           return res.status(403).json({
             error:
@@ -273,7 +282,7 @@ router.delete(
 
             const appointment_del_pat = hospital.appointments.filter(
               (patient) => {
-                if (!isEmpty(patient.id)) return patient.id.email === email;
+                if (!isEmpty(patient.id)) return (patient.id.email === email && Date.parse(patient.date).toString()===date.toString());
               }
             );
 
@@ -305,7 +314,7 @@ router.get(
           let hospital = {};
 
           hospital.status = appoint.status;
-          hospital.date = appoint.date.getTime();
+          hospital.date = Date.parse(appoint.date);
           hospital.note = appoint.note;
           hospital.name = appoint.id.name;
           hospital.email = appoint.id.email;
