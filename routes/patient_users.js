@@ -218,16 +218,59 @@ router.post(
         if (err) return res.json(err);
 
         PatientUser.findOne({ email: req.user.email }).then((patient) => {
-          let newAppointmentPat = { email, note };
+          const newAppointmentPat = { email, note };
           patient.appointments.push(newAppointmentPat);
           patient.save();
         });
 
-        hospital.appointment.push(req.user);
+        const newAppointmentHos = { id: req.user, note };
+        hospital.appointment.push(newAppointmentHos);
         hospital.save();
 
         res.json({ success: "true" });
       });
+  }
+);
+
+//patient appointment deletion
+router.delete(
+  "/appointments/appointment",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { email } = req.body;
+
+    if (isEmpty(email))
+      return res.status(400).json({ error: "Hospital Email is required" });
+
+    PatientUser.findOne({ email: req.user.email }).then((patient) => {
+      const appointment_del_hos = patient.appointments.filter(
+        (appointment) => appointment.email == email
+      );
+      const ind_hos = patient.appointments.indexOf(appointment_del_hos);
+
+      patient.appointments.splice(ind_hos, 1);
+      patient.save();
+
+      HospitalUser.findOne({ email })
+        .populate("appointment.id")
+        .exec((err, hospital) => {
+          if (!hospital)
+            return res
+              .status(404)
+              .json({ notFound: "Hospital with this email not found" });
+
+          const appointment_del_pat = hospital.appointment.filter((patient) => {
+            if (!isEmpty(patient.id)) return patient.id.email === email;
+          });
+
+          const ind_pat = hospital.appointment.indexOf(appointment_del_pat);
+
+          hospital.appointment.splice(ind_pat, 1);
+          hospital.save();
+
+          res.json({ success: "true" });
+        });
+    });
   }
 );
 
