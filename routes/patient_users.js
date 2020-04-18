@@ -51,8 +51,6 @@ router.post("/register", (req, res) => {
         phoneNumber,
       });
 
-      // newUser.appointments = [];
-
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
@@ -188,7 +186,7 @@ router.get("/hospitals", (req, res) => {
           hosp_dist.enable = hospital.enable;
           hosp_dist.note = hospital.note;
           hosp_dist.date = hospital.date;
-          hosp_dist.appointment = hospital.appointment;
+          hosp_dist.appointments = hospital.appointments;
 
           console.log(hosp_dist);
           return hosp_dist;
@@ -220,7 +218,7 @@ router.post(
         if (err) return res.json(err);
 
         PatientUser.findOne({ email: req.user.email }).then((patient) => {
-          const newAppointmentPat = { email, note };
+          const newAppointmentPat = { id: hospital, note };
           patient.appointments.push(newAppointmentPat);
           patient.save();
         });
@@ -242,50 +240,55 @@ router.delete(
   "/appointments/appointment",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    //hospital email
     const { email } = req.body;
 
     if (isEmpty(email))
       return res.status(400).json({ error: "Hospital Email is required" });
 
-    PatientUser.findOne({ email: req.user.email }).then((patient) => {
-      const appointment_del_hos = patient.appointments.filter(
-        (appointment) => appointment.email == email
-      );
+    PatientUser.findOne({ email: req.user.email })
+      .populate("appointments.id")
+      .exec((err, patient) => {
+        const appointment_del_hos = patient.appointments.filter(
+          (appointment) => appointment.id.email === email
+        );
 
-      if (appointment_del_hos[0].status !== "Pending")
-        return res.status(403).json({
-          error:
-            "Appointment can't be removed, as no longer in Pending status.",
-        });
-
-      const ind_hos = patient.appointments.indexOf(appointment_del_hos);
-
-      patient.appointments.splice(ind_hos, 1);
-      patient.save();
-
-      HospitalUser.findOne({ email })
-        .populate("appointment.id")
-        .exec((err, hospital) => {
-          if (!hospital)
-            return res
-              .status(404)
-              .json({ notFound: "Hospital with this email not found" });
-
-          const appointment_del_pat = hospital.appointment.filter((patient) => {
-            if (!isEmpty(patient.id)) return patient.id.email === email;
+        if (appointment_del_hos[0].status !== "Pending")
+          return res.status(403).json({
+            error:
+              "Appointment can't be removed, as no longer in Pending status.",
           });
 
-          const ind_pat = hospital.appointment.indexOf(appointment_del_pat);
+        const ind_hos = patient.appointments.indexOf(appointment_del_hos);
 
-          hospital.appointment.splice(ind_pat, 1);
-          hospital.save();
+        patient.appointments.splice(ind_hos, 1);
+        patient.save();
 
-          res.json({
-            success: "true",
-            message: "Appointment removed successfully.",
+        HospitalUser.findOne({ email })
+          .populate("appointments.id")
+          .exec((err, hospital) => {
+            if (!hospital)
+              return res
+                .status(404)
+                .json({ notFound: "Hospital with this email not found" });
+
+            const appointment_del_pat = hospital.appointments.filter(
+              (patient) => {
+                if (!isEmpty(patient.id)) return patient.id.email === email;
+              }
+            );
+
+            const ind_pat = hospital.appointments.indexOf(appointment_del_pat);
+
+            hospital.appointments.splice(ind_pat, 1);
+            hospital.save();
+
+            res.json({
+              success: "true",
+              message: "Appointment removed successfully.",
+            });
           });
-        });
-    });
+      });
   }
 );
 

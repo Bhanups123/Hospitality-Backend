@@ -46,7 +46,7 @@ const hospitalUserSchema = mongoose.Schema({
   availability: {
     type: Boolean,
   },
-  appointment: [
+  appointments: [
     {
       id: {
         type: mongoose.Schema.Types.ObjectId,
