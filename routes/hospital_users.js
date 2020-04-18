@@ -126,6 +126,7 @@ router.post(
   (req, res) => {
     HospitalUser.findOne({ email: req.user.email }).then((hospital) => {
       const {
+        name,
         beds,
         doctors,
         availability,
@@ -138,6 +139,7 @@ router.post(
         longitude,
       } = req.body;
 
+      if (!isEmpty(name)) hospital.name = name;
       if (!isEmpty(beds)) hospital.beds = beds;
       if (!isEmpty(doctors)) hospital.doctors = doctors;
       if (!isEmpty(availability)) hospital.availability = availability;
