@@ -121,7 +121,7 @@ router.get(
         let patient_info = patient;
 
         for (p in patient_info) {
-          if (p == "password") {
+          if (p == "password" || p == "appointments") {
             patient_info[p] = undefined;
           }
         }
@@ -183,6 +183,7 @@ router.get("/hospitals", (req, res) => {
           hosp_dist.beds = hospital.beds;
           hosp_dist.availability = hospital.availability;
           hosp_dist.totalDoctors = hospital.totalDoctors;
+          hosp_dist.totalBeds = hospital.totalBeds;
           hosp_dist.enable = hospital.enable;
           hosp_dist.note = hospital.note;
           hosp_dist.date = hospital.date;
@@ -298,10 +299,28 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     PatientUser.findOne({ email: req.user.email })
-      .then((patient) => {
-        res.json(patient.appointments);
-      })
-      .catch((err) => res.json(err));
+      .populate("appointments.id")
+      .exec((err, patient) => {
+        if (err) return res.json(err);
+
+        const appointments = patient.appointments.map((appoint) => {
+          let hospital = {};
+
+          hospital.status = appoint.status;
+          hospital.date = appoint.date.getTime();
+          hospital.note = appoint.note;
+          hospital.name = appoint.id.name;
+          hospital.email = appoint.id.email;
+          hospital.address = appoint.id.address;
+          hospital.phoneNumber = appoint.id.phoneNumber;
+          hospital.latitude = appoint.id.latitude;
+          hospital.longitude = appoint.id.longitude;
+
+          return hospital;
+        });
+
+        res.json(appointments);
+      });
   }
 );
 

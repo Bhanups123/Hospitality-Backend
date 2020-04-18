@@ -109,7 +109,7 @@ router.get(
         let hospital_info = hospital;
 
         for (p in hospital_info) {
-          if (p == "password") {
+          if (p == "password" || p == "appointments") {
             hospital_info[p] = undefined;
           }
         }
