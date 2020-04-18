@@ -149,7 +149,9 @@ router.post(
 
       patient
         .save()
-        .then((user_s) => res.json({ success: "true" }))
+        .then((user_s) =>
+          res.json({ success: "true", message: "Info updated successfully." })
+        )
         .catch((err) => res.json(err));
     });
   }
@@ -227,7 +229,10 @@ router.post(
         hospital.appointment.push(newAppointmentHos);
         hospital.save();
 
-        res.json({ success: "true" });
+        res.json({
+          success: "true",
+          message: "Appointment drafted successfully.",
+        });
       });
   }
 );
@@ -275,7 +280,10 @@ router.delete(
           hospital.appointment.splice(ind_pat, 1);
           hospital.save();
 
-          res.json({ success: "true" });
+          res.json({
+            success: "true",
+            message: "Appointment removed successfully.",
+          });
         });
     });
   }
