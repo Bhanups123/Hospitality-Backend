@@ -189,25 +189,4 @@ router.get(
   }
 );
 
-//patient appointment deletion
-router.delete(
-  "/:id_patient",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    HospitalUser.findOne({ _id: req.user.id })
-      .populate("appointment")
-      .exec((err, hospital) => {
-        let patient_del = hospital.appointment.appointments.filter(
-          (patient) => patient._id == req.params.id_patient
-        );
-        const ind = hospital.appointment.appointments.indexOf(patient_del);
-
-        hospital.appointment.appointments.splice(ind, 1);
-        hospital.appointment.save();
-        hospital.save();
-        res.json(hospital);
-      });
-  }
-);
-
 module.exports = router;
