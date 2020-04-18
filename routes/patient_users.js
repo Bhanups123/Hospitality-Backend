@@ -187,9 +187,7 @@ router.get("/hospitals", (req, res) => {
           hosp_dist.enable = hospital.enable;
           hosp_dist.note = hospital.note;
           hosp_dist.date = hospital.date;
-          hosp_dist.appointments = hospital.appointments;
 
-          console.log(hosp_dist);
           return hosp_dist;
         });
         arr = arr.filter((hospital) => hospital.distance <= range);
