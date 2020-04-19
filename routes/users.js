@@ -21,8 +21,11 @@ router.get("/verification/sent", (req, res) => {
 router.get("/verification/check", (req, res) => {
   const { code, email } = req.query;
 
+  let id;
+
   User.findOne({ email }).then((user) => {
-    console.log(user);
+    if (!user) return res.status(404).json({ error: "Incorrect email!!" });
+
     if (user.code == code) {
       if (user.userType === "Patient") {
         PatientUser.findOne({ email }).then((patient) => {
@@ -41,7 +44,7 @@ router.get("/verification/check", (req, res) => {
         .json({ error: "confirmation code doesn't match!!" });
     }
 
-    User.remove({ email });
+    User.findByIdAndDelete({ _id: user._id });
 
     return res.json({
       success: "true",
