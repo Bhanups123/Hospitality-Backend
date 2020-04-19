@@ -44,7 +44,7 @@ router.get("/verification/check", (req, res) => {
         .json({ error: "confirmation code doesn't match!!" });
     }
 
-    User.findByIdAndDelete({ _id: user._id });
+    User.findByIdAndDelete({ _id: user._id }).then();
 
     return res.json({
       success: "true",
