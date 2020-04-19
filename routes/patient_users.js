@@ -10,7 +10,7 @@ const router = express.Router();
 const distCalc = require("../utils/distCalc");
 
 //load input validation
-const validateRegisterInput = require("../validation/patient user/register");
+const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 const isEmpty = require("../validation/is-empty");
 
@@ -35,7 +35,6 @@ router.post("/register", (req, res) => {
         name,
         email,
         password,
-        address,
         latitude,
         longitude,
         phoneNumber,
@@ -45,7 +44,6 @@ router.post("/register", (req, res) => {
         name,
         email,
         password,
-        address,
         latitude,
         longitude,
         phoneNumber,

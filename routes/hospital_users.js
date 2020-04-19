@@ -8,7 +8,7 @@ const passport = require("passport");
 const router = express.Router();
 
 //load input validation
-const validateRegisterInput = require("../validation/hospital user/register");
+const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 const isEmpty = require("../validation/is-empty");
 
@@ -29,7 +29,14 @@ router.post("/register", (req, res) => {
       errors.email = "email already exist";
       return res.status(400).json(errors);
     } else {
-      const { name, email, password, latitude, longitude } = req.body;
+      const {
+        name,
+        email,
+        password,
+        latitude,
+        longitude,
+        phoneNumber,
+      } = req.body;
 
       let newUser = new HospitalUser({
         name,
@@ -37,6 +44,7 @@ router.post("/register", (req, res) => {
         password,
         latitude,
         longitude,
+        phoneNumber,
       });
 
       bcrypt.genSalt(10, (err, salt) => {
