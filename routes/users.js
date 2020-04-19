@@ -22,8 +22,8 @@ router.get("/verification/sent", (req, res) => {
 });
 
 //confirmation code matching route
-router.get("/verification/check", (req, res) => {
-  const { code, email } = req.query;
+router.post("/verification/check", (req, res) => {
+  const { code, email } = req.body;
 
   User.findOne({ email }).then((user) => {
     if (!user) return res.status(404).json({ error: "Incorrect email!!" });
@@ -68,8 +68,8 @@ router.get("/forgot/sent", (req, res) => {
 });
 
 //confirmation code matching route
-router.get("/forgot/check", (req, res) => {
-  let { code, email, passwordNew } = req.query;
+router.post("/forgot/check", (req, res) => {
+  let { code, email, passwordNew } = req.body;
 
   User.findOne({ email }).then((user) => {
     if (!user) return res.status(404).json({ error: "Incorrect email!!" });
