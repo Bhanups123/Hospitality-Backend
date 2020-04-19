@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const passport = require("passport");
 
+const verification = require("./routes/verification");
 const hospital_users = require("./routes/hospital_users");
 const patient_users = require("./routes/patient_users");
 
@@ -34,6 +35,7 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 //use routes
+app.use("/api/", verification);
 app.use("/api/hospital", hospital_users);
 app.use("/api/patient", patient_users);
 
