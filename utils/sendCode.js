@@ -12,10 +12,10 @@ module.exports = (email, userType) => {
   const code = getRandCode();
 
   const data = {
-    from: "sbhanupratap161@gmail.com",
+    from: "helpdesk@hospitality.com",
     to: email,
     subject: "Account Verification!!",
-    text: `You need to verify your account by entering this code: ${code}`,
+    html: `<h1>Hospitality</h1><br><h3>Welcome to Hospitality service!! get right Info! right Time!</h3><br><p>You need to verify your account by entering below code:</p><br> <b>${code}</b>`,
   };
 
   mailgun.messages().send(data, (error, body) => {
