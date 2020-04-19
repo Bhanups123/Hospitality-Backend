@@ -57,8 +57,7 @@ const hospitalUserSchema = mongoose.Schema({
         default: "Pending",
       },
       date: {
-        type: Date,
-        default: Date.now,
+        type: Number,
       },
       note: {
         type: String,
