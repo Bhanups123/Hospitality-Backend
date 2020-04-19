@@ -174,7 +174,7 @@ router.get(
           let patient = {};
 
           patient.status = appoint.status;
-          patient.date = Date.parse(appoint.date);
+          patient.date = appoint.date;
           patient.note = appoint.note;
           patient.name = appoint.id.name;
           patient.email = appoint.id.email;
@@ -200,12 +200,13 @@ router.post(
     //patient's email
     const { confirmation, email, date } = req.body;
 
-
-    PatientUser.findOne({ email:email })
+    PatientUser.findOne({ email: email })
       .populate("appointments.id")
       .exec((err, patient) => {
         const appointment_pat = patient.appointments.filter((appointment) => {
-          return (appointment.id.email === req.user.email && Date.parse(appointment.date).toString()===date.toString() );
+          return (
+            appointment.id.email === req.user.email && appointment.date == date
+          );
         });
         const ind_hos = patient.appointments.indexOf(appointment_pat[0]);
         console.log(confirmation);
@@ -218,7 +219,8 @@ router.post(
           .populate("appointments.id")
           .exec((err, hospital) => {
             const appointment_hos = hospital.appointments.filter((patient) => {
-              if (!isEmpty(patient.id)) return (patient.id.email === email && Date.parse(patient.date).toString()===date.toString());
+              if (!isEmpty(patient.id))
+                return patient.id.email === email && patient.date == date;
             });
 
             const ind_pat = hospital.appointments.indexOf(appointment_hos[0]);

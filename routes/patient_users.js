@@ -221,13 +221,15 @@ router.post(
             .status(404)
             .json({ error: "Hospital with this email not found." });
 
+        const date = Date.now();
+
         PatientUser.findOne({ email: req.user.email }).then((patient) => {
-          const newAppointmentPat = { id: hospital, note };
+          const newAppointmentPat = { id: hospital, note, date };
           patient.appointments.push(newAppointmentPat);
           patient.save();
         });
 
-        const newAppointmentHos = { id: req.user, note };
+        const newAppointmentHos = { id: req.user, note, date };
         hospital.appointments.push(newAppointmentHos);
         hospital.save();
 
@@ -245,10 +247,8 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     //hospital email
+    //date of appointment
     const { email, date } = req.query;
-
-    console.log(email);
-    console.log("Date:" + date);
 
     if (isEmpty(email))
       return res.status(400).json({ error: "Hospital Email is required" });
@@ -258,16 +258,12 @@ router.delete(
       .exec((err, patient) => {
         const appointment_del_hos = patient.appointments.filter(
           (appointment) => {
-            return (
-              appointment.id.email === email &&
-              Date.parse(appointment.date).toString() === date.toString()
-            );
+            return appointment.id.email === email && appointment.date == date;
           }
         );
-
         if (isEmpty(appointment_del_hos))
           return res.status(404).json({
-            error: "No user found with email.",
+            error: "No such appointment found.",
           });
         if (appointment_del_hos[0].status !== "Pending")
           return res.status(403).json({
@@ -291,10 +287,7 @@ router.delete(
             const appointment_del_pat = hospital.appointments.filter(
               (patient) => {
                 if (!isEmpty(patient.id))
-                  return (
-                    patient.id.email === email &&
-                    Date.parse(patient.date).toString() === date.toString()
-                  );
+                  return patient.id.email === email && patient.date == date;
               }
             );
 
@@ -326,7 +319,7 @@ router.get(
           let hospital = {};
 
           hospital.status = appoint.status;
-          hospital.date = Date.parse(appoint.date);
+          hospital.date = appoint.date;
           hospital.note = appoint.note;
           hospital.name = appoint.id.name;
           hospital.email = appoint.id.email;
@@ -335,7 +328,6 @@ router.get(
           hospital.latitude = appoint.id.latitude;
           hospital.longitude = appoint.id.longitude;
 
-          console.log(hospital.date, "Sdfkvndv", appoint.date.getTime());
           return hospital;
         });
 
