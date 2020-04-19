@@ -216,6 +216,11 @@ router.post(
       .exec((err, hospital) => {
         if (err) return res.json(err);
 
+        if (!hospital)
+          return res
+            .status(404)
+            .json({ error: "Hospital with this email not found." });
+
         PatientUser.findOne({ email: req.user.email }).then((patient) => {
           const newAppointmentPat = { id: hospital, note };
           patient.appointments.push(newAppointmentPat);
@@ -243,18 +248,21 @@ router.delete(
     const { email, date } = req.query;
 
     console.log(email);
-    console.log("Date:" +date);
+    console.log("Date:" + date);
 
     if (isEmpty(email))
       return res.status(400).json({ error: "Hospital Email is required" });
-
 
     PatientUser.findOne({ email: req.user.email })
       .populate("appointments.id")
       .exec((err, patient) => {
         const appointment_del_hos = patient.appointments.filter(
-          (appointment)=> {
-            return (appointment.id.email === email && Date.parse(appointment.date).toString() === date.toString());}
+          (appointment) => {
+            return (
+              appointment.id.email === email &&
+              Date.parse(appointment.date).toString() === date.toString()
+            );
+          }
         );
 
         if (isEmpty(appointment_del_hos))
@@ -282,7 +290,11 @@ router.delete(
 
             const appointment_del_pat = hospital.appointments.filter(
               (patient) => {
-                if (!isEmpty(patient.id)) return (patient.id.email === email && Date.parse(patient.date).toString()===date.toString());
+                if (!isEmpty(patient.id))
+                  return (
+                    patient.id.email === email &&
+                    Date.parse(patient.date).toString() === date.toString()
+                  );
               }
             );
 
@@ -323,6 +335,7 @@ router.get(
           hospital.latitude = appoint.id.latitude;
           hospital.longitude = appoint.id.longitude;
 
+          console.log(hospital.date, "Sdfkvndv", appoint.date.getTime());
           return hospital;
         });
 
