@@ -7,7 +7,7 @@ const passport = require("passport");
 
 const router = express.Router();
 
-const sendCode = require("../utils/sendCode");
+const sendVerifyCode = require("../utils/sendVerifyCode");
 
 //load input validation
 const validateRegisterInput = require("../validation/register");
@@ -41,7 +41,7 @@ router.post("/register", (req, res) => {
       } = req.body;
 
       //sending verification code to user email
-      sendCode(email, "Hospital");
+      sendVerifyCode(email, "Hospital");
 
       let newUser = new HospitalUser({
         name,
