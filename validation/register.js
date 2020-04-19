@@ -8,9 +8,6 @@ module.exports = function validateRegisterInput(data) {
   data.email = isEmpty(data.email) ? "" : data.email;
   data.password = isEmpty(data.password) ? "" : data.password;
   data.password2 = isEmpty(data.password2) ? "" : data.password2;
-  data.phoneNumber = isEmpty(data.phoneNumber)
-    ? ""
-    : data.phoneNumber.toString();
 
   //name
   if (!validator.isLength(data.name, { min: 2, max: 30 })) {
@@ -46,11 +43,6 @@ module.exports = function validateRegisterInput(data) {
 
   if (validator.isEmpty(data.password2)) {
     errors.password2 = "Confirm Password is required";
-  }
-
-  // phone number
-  if (!validator.isLength(data.phoneNumber, { min: 10, max: 10 })) {
-    errors.phoneNumber = "Phone Number must be of 10 digits";
   }
 
   return {
