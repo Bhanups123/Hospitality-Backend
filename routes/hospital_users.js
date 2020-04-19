@@ -85,6 +85,13 @@ router.post("/login", (req, res) => {
     bcrypt.compare(req.body.password, hospital.password).then((isMatch) => {
       if (isMatch) {
         //hospital matched
+
+        //if user have not verified its account
+        if (!hospital.enable)
+          return res
+            .status(401)
+            .json({ error: "You need to verify your account first" });
+
         const payload = {
           id: hospital.id,
           name: hospital.name,
