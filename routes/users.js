@@ -59,12 +59,36 @@ router.post("/verification/check", (req, res) => {
 router.get("/forgot/sent", (req, res) => {
   const { email, userType } = req.query;
 
-  sendForgotCode(email, userType);
+  console.log(userType);
 
-  res.json({
-    success: "true",
-    message: `Confirmation code has been sent to ${email}`,
-  });
+  if (userType === "Patient") {
+    PatientUser.findOne({ email }).then((patient) => {
+      if (!(patient)) {
+        return res.status(404).json({ error: "Incorrect email!!!" })
+      }
+      else {
+        sendForgotCode(email, userType);
+        res.json({
+          success: "true",
+          message: `Confirmation code has been sent to ${email}`,
+        });
+      }
+    });
+  }
+  else {
+    HospitalUser.findOne({ email }).then((hospital) => {
+      if (!(hospital)) {
+        return res.status(404).json({ error: "Incorrect email!!" })
+      }
+      else {
+        sendForgotCode(email, userType);
+        res.json({
+          success: "true",
+          message: `Confirmation code has been sent to ${email}`,
+        });
+      }
+    });
+  }
 });
 
 //confirmation code matching route

@@ -14,8 +14,8 @@ module.exports = (email, userType) => {
   const data = {
     from: "helpdesk@hospitality.com",
     to: email,
-    subject: "Account Verification!!",
-    html: `<h1>Hospitality</h1><br><h3>Welcome To Hospitality Service!! Get Right Info! Right Time!</h3><br><p>You need to verify your account by entering below code:</p><br> <b>${code}</b><br><p>Thank You! Apka Din mangal me hoichh!!</p>`,
+    subject: "Account Verification",
+    html: `<h1>Hospitality</h1><br><h3>Welcome to Hospitality Service! Get Right Info! Right Time!</h3><br><p>You need to verify your account by entering the code below:</p><br> <b>${code}</b><br><p>Thank You! Have a nice day! :)</p>`,
   };
 
   mailgun.messages().send(data, (error, body) => {

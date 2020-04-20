@@ -14,8 +14,8 @@ module.exports = (email, userType) => {
   const data = {
     from: "helpdesk@hospitality.com",
     to: email,
-    subject: "Bhool Gayich Password!!",
-    html: `<h1>Hospitality!</h1><br><h3>Welcome to Hospitality service!! get right Info! right Time!</h3><br><p>You need to enter below code for reseting your password:</p><br> <b>${code}</b><br><p>Thank You! Apka Din mangal me hoichh!!</p>`,
+    subject: "Forgot Password",
+    html: `<h1>Hospitality</h1><br><h3>Welcome to Hospitality Service! Get Right Info! Right Time!</h3><br><p>You need to enter the code below in order to reset your password:</p><br> <b>${code}</b><br><p>Thank You! Have a nice day! :)</p>`,
   };
 
   mailgun.messages().send(data, (error, body) => {
