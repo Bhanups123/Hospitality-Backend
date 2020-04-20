@@ -3,24 +3,21 @@ const getRandCode = require("./getRandCode");
 const User = require("../models/User");
 
 //connecting mailgun
-var mailgun = require("mailgun-js")({
-  apiKey: keys.API_KEY,
-  domain: keys.DOMAIN,
-});
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(keys.API_KEY);
+
 
 module.exports = (email, userType) => {
   const code = getRandCode();
 
   const data = {
-    from: "helpdesk@hospitality.com",
+    from: "Hospitality@hospitality-helpdesk.com",
     to: email,
     subject: "Account Verification",
     html: `<h1>Hospitality</h1><br><h3>Welcome to Hospitality Service! Get Right Info! Right Time!</h3><br><p>You need to verify your account by entering the code below:</p><br> <b>${code}</b><br><p>Thank You! Have a nice day! :)</p>`,
   };
 
-  mailgun.messages().send(data, (error, body) => {
-    console.log(body);
-  });
+  sgMail.send(data);
 
   User.findOne({ email })
     .then((user) => {
