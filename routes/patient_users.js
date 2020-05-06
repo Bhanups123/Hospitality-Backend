@@ -199,7 +199,7 @@ router.get("/hospitals", (req, res) => {
 
           return hosp_dist;
         });
-        arr = arr.filter((hospital) => hospital.enable and hospital.distance <= range );
+        arr = arr.filter((hospital) => hospital.enable && hospital.distance <= range );
 
         if (arr.length === 0) {
           res.status(404).json({ notFound: "No nearby hospital found" });
