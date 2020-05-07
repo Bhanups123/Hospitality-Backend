@@ -194,13 +194,13 @@ router.get("/hospitals", (req, res) => {
           hosp_dist.totalDoctors = hospital.totalDoctors;
           hosp_dist.totalBeds = hospital.totalBeds;
           hosp_dist.enable = hospital.enable;
-          hosp_dist.verified = hospital.verified;
+          // hosp_dist.verified = hospital.verified;
           hosp_dist.note = hospital.note;
           hosp_dist.date = hospital.date;
 
           return hosp_dist;
         });
-        arr = arr.filter((hospital) => hospital.enable && hospital.verified && hospital.distance <= range );
+        arr = arr.filter((hospital) => hospital.enable && hospital.distance <= range );
 
         if (arr.length === 0) {
           res.status(404).json({ notFound: "No nearby hospital found" });

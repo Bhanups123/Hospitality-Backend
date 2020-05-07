@@ -93,10 +93,10 @@ router.post("/login", (req, res) => {
             .json({ error: "You need to verify your account first" });
 
       	//if user have not verified its hospital
-        if (!hospital.verified)
-          return res
-            .status(401)
-            .json({ error: "Your hospital is not verified yet!!" });
+        // if (!hospital.verified)
+        //   return res
+        //     .status(401)
+        //     .json({ error: "Your hospital is not verified yet!!" });
 
 		//creating jwt payload
         const payload = {
