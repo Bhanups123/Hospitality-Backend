@@ -1,0 +1,268 @@
+[33mcommit 16c9c75bf334d858ec5cf94c8a1f3b13a1b93d1c[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Bhanu Pratap Singh <sbhanupratap161>
+Date:   Sat May 16 19:09:17 2020 +0530
+
+    deleted unnecessary file
+
+[33mcommit 44de0695b58dba3ead9e208d2478f5ab2decf551[m
+Author: Bhanu Pratap Singh <sbhanupratap161>
+Date:   Sat May 16 18:44:46 2020 +0530
+
+    sa
+
+[33mcommit 8032902da8d8e72ef050c061e4637e8170ce00fe[m
+Author: Bhanu Pratap Singh <sbhanupratap161>
+Date:   Sat May 16 18:43:27 2020 +0530
+
+    updating
+
+[33mcommit bec8cf319758469cbfda07d6d81577f05e48f90d[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Thu May 7 09:16:49 2020 +0530
+
+    removed additional unsed fe
+
+[33mcommit 6e4765cc8c22db89ff064fa16db46614c11b9b37[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Wed May 6 11:04:37 2020 +0530
+
+    added verified filteration
+
+[33mcommit 80c5e148cd277e652157fdfe34db7cec46887f60[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Wed May 6 11:02:18 2020 +0530
+
+    field added
+
+[33mcommit f34e3e4063bb8d7607a85e96f560a7a05876b476[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Wed May 6 11:00:45 2020 +0530
+
+    added verified filteration:
+
+[33mcommit 64511a6a216ffbae4580c15e909874978affb518[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Wed May 6 10:59:25 2020 +0530
+
+    hospital verification mail helper fn
+
+[33mcommit 86e9bc5808a001e15cec95cbb026be170e709c44[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Wed May 6 09:51:33 2020 +0530
+
+    few changes
+
+[33mcommit 0d7bf22a73013fbce5368a97190ed9dd2d35102c[m
+Merge: 330514f 8c578d5
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Wed May 6 09:39:19 2020 +0530
+
+    Merge branch 'master' of https://github.com/Bhanups123/Hospital_Backend
+
+[33mcommit 330514fffd2a3d98ccee17c444f0dbfae154a7dd[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Wed May 6 09:38:45 2020 +0530
+
+    bug fixed
+
+[33mcommit 8c578d5d4ec0ff7cd61b76e2155a5deaa41967d2[m
+Author: Bhanu Pratap Singh <44453307+Bhanups123@users.noreply.github.com>
+Date:   Tue Apr 21 17:15:57 2020 +0530
+
+    Update README.md
+
+[33mcommit 90a0add88afc692ac376af6c9898a6e2a66d4f5f[m
+Merge: 1318e75 4736f17
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Tue Apr 21 16:31:42 2020 +0530
+
+    Merge branch 'master' of https://github.com/Bhanups123/Hospital_Backend
+
+[33mcommit 1318e75b65afed2a65d3def630658ca3f8564dfc[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Tue Apr 21 16:25:47 2020 +0530
+
+    removed unnecessary package
+
+[33mcommit 4736f17610d1ecbec5e5a8192e3a42511bbd9575[m
+Author: Bhanu Pratap Singh <44453307+Bhanups123@users.noreply.github.com>
+Date:   Tue Apr 21 16:07:28 2020 +0530
+
+    Update README.md
+
+[33mcommit ace6d5a710ba3298cb9babd7839b8254bdeef703[m
+Merge: 7a18557 9cd733e
+Author: Bhanu Pratap Singh <44453307+Bhanups123@users.noreply.github.com>
+Date:   Tue Apr 21 07:23:50 2020 +0530
+
+    Merge pull request #5 from saarthak08/master
+    
+    Update README.md
+
+[33mcommit 9cd733ee23ec8d1c4512bbabc032558f6d22e5a2[m
+Author: Saarthak Gupta <saarthakgupta08@gmail.com>
+Date:   Tue Apr 21 00:15:03 2020 +0530
+
+    Update README.md
+
+[33mcommit 7a18557b68aedae1dbd2b453ecd947fcb811ed83[m[33m ([m[1;31msarthak/master[m[33m)[m
+Author: Saarthak Gupta <saarthakgupta08@gmail.com>
+Date:   Mon Apr 20 06:23:20 2020 +0530
+
+    bug fixes
+
+[33mcommit d8088f959353421a4159f48e5bd635bb0fc60330[m
+Author: Saarthak Gupta <saarthakgupta08@gmail.com>
+Date:   Mon Apr 20 06:00:17 2020 +0530
+
+    code refactor
+
+[33mcommit bc38f1e228cda7107ecb62b9b35dabd6edad7ed6[m
+Author: Saarthak Gupta <saarthakgupta08@gmail.com>
+Date:   Mon Apr 20 05:57:48 2020 +0530
+
+    bug fixes
+
+[33mcommit b63d6f95c1961202a6d3064e057134852e96abe7[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 04:20:41 2020 +0530
+
+    minor fixing
+
+[33mcommit a8d32739b9fc688f870958a7f73aa0adf2d30eb3[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 04:15:47 2020 +0530
+
+    few changes
+
+[33mcommit f71d56d7a315b92d29e9417e4ea2524fbc0645d9[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 04:15:15 2020 +0530
+
+    created forgot password routes:
+
+[33mcommit cbe3b65f197d1e98b6bdd6a8b9473fa1076f68cb[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 04:14:39 2020 +0530
+
+    created forgot password sending fn
+
+[33mcommit af5caf0ea7fd290b82053d95e2deb73ba40ccd86[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 04:14:01 2020 +0530
+
+    proper name
+
+[33mcommit d04931b9ec36a7b19bd1770c5a7b5917242520f7[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 03:23:02 2020 +0530
+
+    improvement
+
+[33mcommit f7e334234926bf124df755826ee563c20d3dad82[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 03:22:35 2020 +0530
+
+    added login enable feature
+
+[33mcommit d6c19f5d59bd4b11c26c2159684711a67838a261[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 03:11:57 2020 +0530
+
+    bug fixed in deleting
+
+[33mcommit 5a6293003367c2dd3797b8bab8adf03f9c3cf0ac[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 03:03:50 2020 +0530
+
+    minor bug removed
+
+[33mcommit 1daf2cd0d9180d3667299d7b57e9f29dfd037ce5[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 03:03:27 2020 +0530
+
+    few improvements
+
+[33mcommit 2bd6d08bdd2c9c1cd94a235f2b7aac318f80a292[m
+Author: Bhanu Pratap Singh <44453307+Bhanups123@users.noreply.github.com>
+Date:   Mon Apr 20 01:45:56 2020 +0530
+
+    Delete keys.js
+
+[33mcommit 383ea179db424fac6215e5001157af746dd36558[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 01:44:54 2020 +0530
+
+    few changes
+
+[33mcommit f040f9deb54b345ea84cec0e451dc40b7cc0724a[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 00:49:27 2020 +0530
+
+    setuped verification routes
+
+[33mcommit 1326f5b9e58f247affd702fca3f49ba8b0c4aa04[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 00:48:32 2020 +0530
+
+    minor bug fixed
+
+[33mcommit 6c2605304b5b36ffe43de252af8ce8623c03c949[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 00:45:51 2020 +0530
+
+    added auto send code functionality after registration
+
+[33mcommit a8ab0348c0812ae037de152caa44972bd78ddeea[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 00:44:27 2020 +0530
+
+    created code check route
+
+[33mcommit d0e3fecfd707700984c4a5b524066d751e4243a9[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Mon Apr 20 00:43:45 2020 +0530
+
+    created confirmation code sender and storer fn
+
+[33mcommit 2425638f008cd87ea6a68528dd8130a1ff50a30c[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Sun Apr 19 22:32:58 2020 +0530
+
+    verification codesending route created
+
+[33mcommit bbdb266b0e74ea623a9b0a5a60744ae3fe1dac9e[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Sun Apr 19 22:31:48 2020 +0530
+
+    added mailgun setup keys temporarily
+
+[33mcommit c972e369b6aea115650010a150010a01c493f0d4[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Sun Apr 19 22:26:59 2020 +0530
+
+    6 dig generator fn created
+
+[33mcommit e35e320ea9cf7136733b3cd4a75fc2f0af1ad250[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Sun Apr 19 22:20:27 2020 +0530
+
+    created verification model
+
+[33mcommit 8798424fd48c8f1e20192c1bc114a0cdec01bbc4[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Sun Apr 19 15:24:18 2020 +0530
+
+    removed phone number validation
+
+[33mcommit 7a2e975900b5b67596409e0b6242350e7e059e7a[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Sun Apr 19 15:07:15 2020 +0530
+
+    removed redundant validation
+
+[33mcommit cded0e1e3c3d377357a5528e2da8bf07c7ec6e66[m
+Author: Bhanu Pratap Singh <sbhanupratap161@gmail.com>
+Date:   Sun Apr 19 12:59:36 2020 +0530
+
+    fe
