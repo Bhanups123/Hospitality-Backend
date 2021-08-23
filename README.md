@@ -34,9 +34,9 @@ A Node.js-based backend for [Hospitality-MobileClient](https://github.com/saarth
 ## Note:
 - To run this app, follow the steps below:
 - - Run `npm install` in the terminal in the project's directory to install the dependencies.
-- - Create a file named `key.js` and place it in `config` folder of the project's directory.
-- - In `key.js` export an object with keys: `mongoURI`, `secretOrKey`, `API_KEY` and values: `YOUR_OWN_MONGODB_URI`, `JWT_SECRET_KEY`, `YOUR_OWN_SENDGRID_APIKEY` respectively.
-- - So, your `key.js` will look like this: 
+- - Create a file named `keys.js` and place it in `config` folder of the project's directory.
+- - In `keys.js` export an object with keys: `mongoURI`, `secretOrKey`, `API_KEY` and values: `YOUR_OWN_MONGODB_URI`, `JWT_SECRET_KEY`, `YOUR_OWN_SENDGRID_APIKEY` respectively.
+- - So, your `keys.js` will look like this: 
 ```
 module.exports = {
   mongoURI:
